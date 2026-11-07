@@ -22,7 +22,7 @@
             <div>
                 <span class="bg-red-800 text-red-100 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">Aplikasi Operasional Area Multi-Store</span>
                 <h1 class="text-2xl md:text-3xl font-bold mt-1 tracking-tight">AYAM GEPREK SA'I</h1>
-                <p class="text-red-100 text-sm">Form Rekapitulasi & Persentase Penjualan Menu Baru vs Net Sales Keseluruhan</p>
+                <p class="text-red-100 text-sm">Form Rekapitulasi & Analisis Kumulatif 3 Jenis Saus Utama</p>
             </div>
             <div class="bg-red-800/90 px-4 py-3 rounded-xl border border-red-600 text-sm flex flex-col gap-2 min-w-[280px]">
                 <div class="flex justify-between items-center gap-2">
@@ -153,7 +153,7 @@
 
             <!-- TOMBOL AKSI -->
             <div class="p-6 bg-slate-50 border-t border-slate-200 flex flex-wrap justify-between items-center gap-4">
-                <p class="text-xs text-slate-500">* Data akan tersimpan lokal dan otomatis dikirim langsung ke Google Sheets Anda.</p>
+                <p class="text-xs text-slate-500">* Data tersimpan otomatis secara lokal dan tersinkron ke Google Sheets.</p>
                 <div class="flex gap-3">
                     <button type="button" onclick="resetForm()" class="px-5 py-2.5 rounded-xl border border-slate-300 font-semibold text-slate-600 hover:bg-slate-100 transition">
                         <i class="fa-solid fa-rotate-right mr-1"></i> Reset Form
@@ -165,13 +165,49 @@
             </div>
         </div>
 
-        <!-- TABEL ANALISIS & DIAGRAM PERSENTASE PRODUK -->
+        <!-- DIAGRAM & ANALISIS KUMULATIF 3 SAUS UTAMA -->
         <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
-            <h3 class="font-bold text-lg text-slate-800 flex items-center gap-2 mb-4">
-                <i class="fa-solid fa-chart-pie text-red-600"></i> Diagram & Persentase Kontribusi Produk (Store Aktif)
+            <h3 class="font-bold text-lg text-slate-800 flex items-center gap-2 mb-2">
+                <i class="fa-solid fa-chart-pie text-red-600"></i> Analisis Kumulatif 3 Jenis Saus Utama (Hot Chili, Butter, Garlic)
             </h3>
-            <div id="persentaseContainer" class="space-y-4">
-                <!-- Bar persentase produk di-generate via JS -->
+            <p class="text-xs text-slate-500 mb-6">Akumulasi seluruh varian menu berdasarkan varian saus beserta persentase kontribusinya terhadap Net Sales Store.</p>
+
+            <!-- Grid Visualisasi Diagram -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center mb-8">
+                <!-- Diagram Batang Kumulatif -->
+                <div id="kumulatifBarContainer" class="space-y-4">
+                    <!-- Diisi via JS -->
+                </div>
+
+                <!-- Diagram Lingkaran (Donut Chart Keren) -->
+                <div class="flex flex-col items-center justify-center bg-slate-50 p-6 rounded-2xl border border-slate-200">
+                    <h4 class="font-bold text-sm text-slate-700 mb-4 uppercase tracking-wider">Proporsi Omzet 3 Jenis Saus</h4>
+                    <div class="relative w-48 h-48 flex items-center justify-center">
+                        <svg id="donutChart" class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                            <!-- SVG Donut Paths di-generate via JS -->
+                        </svg>
+                        <div class="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
+                            <span class="text-xs font-semibold text-slate-400 uppercase">Total Saus</span>
+                            <span id="donutTotalOmzet" class="text-sm font-extrabold text-slate-800">Rp 0</span>
+                        </div>
+                    </div>
+                    <!-- Legend / Keterangan Warna -->
+                    <div class="flex flex-wrap justify-center gap-4 mt-6 text-xs font-semibold">
+                        <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-red-600 inline-block"></span> Hot Chili</div>
+                        <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-amber-500 inline-block"></span> Butter</div>
+                        <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-emerald-600 inline-block"></span> Garlic</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Keterangan Daya Beli & Preferensi Konsumen -->
+            <div class="bg-slate-900 text-white p-6 rounded-2xl border border-slate-800">
+                <h4 class="font-bold text-sm uppercase tracking-wider text-amber-400 mb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-lightbulb"></i> Keterangan & Analisis Daya Beli Konsumen
+                </h4>
+                <div id="analisisDayaBeliText" class="text-xs text-slate-300 leading-relaxed space-y-2">
+                    <!-- Diisi via JS -->
+                </div>
             </div>
         </div>
 
@@ -261,30 +297,30 @@
         ];
 
         const menuList = [
-            { category: "1. HOT CHILI SAUCE", name: "HOT CHILI SAUCE SAYAP", price: 12000 },
-            { category: "1. HOT CHILI SAUCE", name: "HOT CHILI SAUCE PAHA BAWAH", price: 13000 },
-            { category: "1. HOT CHILI SAUCE", name: "HOT CHILI SAUCE PAHA ATAS", price: 17000 },
-            { category: "1. HOT CHILI SAUCE", name: "HOT CHILI SAUCE DADA", price: 17000 },
-            { category: "2. BUTTER SAUCE", name: "BUTTER SAUCE SAYAP", price: 12000 },
-            { category: "2. BUTTER SAUCE", name: "BUTTER SAUCE PAHA BAWAH", price: 13000 },
-            { category: "2. BUTTER SAUCE", name: "BUTTER SAUCE PAHA ATAS", price: 17000 },
-            { category: "2. BUTTER SAUCE", name: "BUTTER SAUCE DADA", price: 17000 },
-            { category: "3. GARLIC SAUCE", name: "GARLIC SAUCE SAYAP", price: 12000 },
-            { category: "3. GARLIC SAUCE", name: "GARLIC SAUCE PAHA BAWAH", price: 13000 },
-            { category: "3. GARLIC SAUCE", name: "GARLIC SAUCE PAHA ATAS", price: 17000 },
-            { category: "3. GARLIC SAUCE", name: "GARLIC SAUCE DADA", price: 17000 },
-            { category: "4. PAKET MENU BARU", name: "PAKET 1 - HOT CHILI SAUCE", price: 17000 },
-            { category: "4. PAKET MENU BARU", name: "PAKET 1 - BUTTER SAUCE", price: 17000 },
-            { category: "4. PAKET MENU BARU", name: "PAKET 1 - GARLIC SAUCE", price: 17000 },
-            { category: "4. PAKET MENU BARU", name: "PAKET 2 - HOT CHILI SAUCE", price: 19000 },
-            { category: "4. PAKET MENU BARU", name: "PAKET 2 - BUTTER SAUCE", price: 19000 },
-            { category: "4. PAKET MENU BARU", name: "PAKET 2 - GARLIC SAUCE", price: 19000 },
-            { category: "4. PAKET MENU BARU", name: "PAKET 3 - HOT CHILI SAUCE", price: 24000 },
-            { category: "4. PAKET MENU BARU", name: "PAKET 3 - BUTTER SAUCE", price: 24000 },
-            { category: "4. PAKET MENU BARU", name: "PAKET 3 - GARLIC SAUCE", price: 24000 }
+            { category: "1. HOT CHILI SAUCE", name: "HOT CHILI SAUCE SAYAP", price: 12000, sausType: "Hot Chili" },
+            { category: "1. HOT CHILI SAUCE", name: "HOT CHILI SAUCE PAHA BAWAH", price: 13000, sausType: "Hot Chili" },
+            { category: "1. HOT CHILI SAUCE", name: "HOT CHILI SAUCE PAHA ATAS", price: 17000, sausType: "Hot Chili" },
+            { category: "1. HOT CHILI SAUCE", name: "HOT CHILI SAUCE DADA", price: 17000, sausType: "Hot Chili" },
+            { category: "2. BUTTER SAUCE", name: "BUTTER SAUCE SAYAP", price: 12000, sausType: "Butter" },
+            { category: "2. BUTTER SAUCE", name: "BUTTER SAUCE PAHA BAWAH", price: 13000, sausType: "Butter" },
+            { category: "2. BUTTER SAUCE", name: "BUTTER SAUCE PAHA ATAS", price: 17000, sausType: "Butter" },
+            { category: "2. BUTTER SAUCE", name: "BUTTER SAUCE DADA", price: 17000, sausType: "Butter" },
+            { category: "3. GARLIC SAUCE", name: "GARLIC SAUCE SAYAP", price: 12000, sausType: "Garlic" },
+            { category: "3. GARLIC SAUCE", name: "GARLIC SAUCE PAHA BAWAH", price: 13000, sausType: "Garlic" },
+            { category: "3. GARLIC SAUCE", name: "GARLIC SAUCE PAHA ATAS", price: 17000, sausType: "Garlic" },
+            { category: "3. GARLIC SAUCE", name: "GARLIC SAUCE DADA", price: 17000, sausType: "Garlic" },
+            { category: "4. PAKET MENU BARU", name: "PAKET 1 - HOT CHILI SAUCE", price: 17000, sausType: "Hot Chili" },
+            { category: "4. PAKET MENU BARU", name: "PAKET 1 - BUTTER SAUCE", price: 17000, sausType: "Butter" },
+            { category: "4. PAKET MENU BARU", name: "PAKET 1 - GARLIC SAUCE", price: 17000, sausType: "Garlic" },
+            { category: "4. PAKET MENU BARU", name: "PAKET 2 - HOT CHILI SAUCE", price: 19000, sausType: "Hot Chili" },
+            { category: "4. PAKET MENU BARU", name: "PAKET 2 - BUTTER SAUCE", price: 19000, sausType: "Butter" },
+            { category: "4. PAKET MENU BARU", name: "PAKET 2 - GARLIC SAUCE", price: 19000, sausType: "Garlic" },
+            { category: "4. PAKET MENU BARU", name: "PAKET 3 - HOT CHILI SAUCE", price: 24000, sausType: "Hot Chili" },
+            { category: "4. PAKET MENU BARU", name: "PAKET 3 - BUTTER SAUCE", price: 24000, sausType: "Butter" },
+            { category: "4. PAKET MENU BARU", name: "PAKET 3 - GARLIC SAUCE", price: 24000, sausType: "Garlic" }
         ];
 
-        // URL Google Apps Script terbaru Anda
+        // URL Google Apps Script Anda
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx9hLOdxcqShNug3P33eyjz8pkPNHAGHSiQmA9sitZhFqA6MVczOcKBmU6zfL0vEGFc/exec";
 
         function initTanggal() {
@@ -336,7 +372,13 @@
             let totalGlobalPcs = 0;
             let totalGlobalRp = 0;
             let netSalesTotal = parseFloat(document.getElementById('inputNetSalesTotal').value) || 0;
-            let produkPersenHtml = '';
+
+            // Akumulator 3 jenis saus kumulatif
+            let kumulatifSaus = {
+                "Hot Chili": { psc: 0, rp: 0, color: "bg-red-600", stroke: "#dc2626" },
+                "Butter": { psc: 0, rp: 0, color: "bg-amber-500", stroke: "#f59e0b" },
+                "Garlic": { psc: 0, rp: 0, color: "bg-emerald-600", stroke: "#059669" }
+            };
 
             menuList.forEach((item, index) => {
                 let q13 = parseInt(document.querySelector(`input[data-index="${index}"][data-time="13"]`).value) || 0;
@@ -352,20 +394,9 @@
                 totalGlobalPcs += sumPcs;
                 totalGlobalRp += sumRp;
 
-                let persen = netSalesTotal > 0 ? ((sumRp / netSalesTotal) * 100).toFixed(2) : 0;
-
-                if(sumPcs > 0) {
-                    produkPersenHtml += `
-                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 flex flex-col md:flex-row justify-between items-center gap-2">
-                            <div class="w-full md:w-1/3 font-semibold text-slate-700 text-sm">${item.name}</div>
-                            <div class="w-full md:w-1/3 bg-slate-200 rounded-full h-3 overflow-hidden">
-                                <div class="bg-red-600 h-3 rounded-full" style="width: ${Math.min(persen, 100)}%"></div>
-                            </div>
-                            <div class="w-full md:w-1/3 text-right text-xs font-bold text-slate-600">
-                                Rp ${sumRp.toLocaleString('id-ID')} (${persen}% dari Net Sales Store)
-                            </div>
-                        </div>
-                    `;
+                if (kumulatifSaus[item.sausType]) {
+                    kumulatifSaus[item.sausType].psc += sumPcs;
+                    kumulatifSaus[item.sausType].rp += sumRp;
                 }
             });
 
@@ -375,9 +406,73 @@
             document.getElementById('statTotalRp').textContent = `Rp ${totalGlobalRp.toLocaleString('id-ID')}`;
             document.getElementById('statTotalNetSales').textContent = `Rp ${netSalesTotal.toLocaleString('id-ID')}`;
             document.getElementById('statPersentaseKontribusi').textContent = `${kontribusiTotal}%`;
+            document.getElementById('donutTotalOmzet').textContent = `Rp ${totalGlobalRp.toLocaleString('id-ID')}`;
 
-            const containerPersen = document.getElementById('persentaseContainer');
-            containerPersen.innerHTML = produkPersenHtml || `<p class="text-center text-slate-400 py-4 text-sm">Belum ada kuantiti produk yang diisi untuk melihat diagram persentase store ini.</p>`;
+            // Render Diagram Batang Kumulatif 3 Saus
+            let barHtml = '';
+            let donutSvgHtml = '';
+            let cumulativePercent = 0;
+            let circumference = 2 * Math.PI * 40; // r = 40
+
+            let maxSausRp = Math.max(kumulatifSaus["Hot Chili"].rp, kumulatifSaus["Butter"].rp, kumulatifSaus["Garlic"].rp, 1);
+
+            Object.keys(kumulatifSaus).forEach(sausage => {
+                let data = kumulatifSaus[sausage];
+                let percentOfMenu = totalGlobalRp > 0 ? ((data.rp / totalGlobalRp) * 100).toFixed(1) : 0;
+                let percentOfNetSales = netSalesTotal > 0 ? ((data.rp / netSalesTotal) * 100).toFixed(2) : 0;
+                let barWidth = ((data.rp / maxSausRp) * 100).toFixed(1);
+
+                // Bar Chart HTML
+                barHtml += `
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <div class="flex justify-between items-center mb-1 text-sm">
+                            <span class="font-bold text-slate-700">${sausage} Sauce (Kumulatif)</span>
+                            <span class="font-extrabold text-slate-900">Rp ${data.rp.toLocaleString('id-ID')} (${percentOfMenu}% dari Menu Baru)</span>
+                        </div>
+                        <div class="w-full bg-slate-200 rounded-full h-3.5 overflow-hidden mb-1">
+                            <div class="${data.color} h-3.5 rounded-full transition-all duration-500" style="width: ${barWidth}%"></div>
+                        </div>
+                        <div class="flex justify-between text-xs text-slate-500 font-medium">
+                            <span>${data.psc} Porsi Terjual</span>
+                            <span>Kontribusi ke Net Sales: <strong class="text-amber-600">${percentOfNetSales}%</strong></span>
+                        </div>
+                    </div>
+                `;
+
+                // Donut Chart SVG Segment
+                let dashArrayVal = totalGlobalRp > 0 ? (data.rp / totalGlobalRp) * circumference : 0;
+                let dashOffsetVal = -cumulativePercent * circumference;
+                if (totalGlobalRp > 0) {
+                    cumulativePercent += (data.rp / totalGlobalRp);
+                }
+
+                donutSvgHtml += `
+                    <circle cx="50" cy="50" r="40" fill="transparent" stroke="${data.stroke}" stroke-width="16" 
+                        stroke-dasharray="${dashArrayVal} ${circumference}" stroke-dashoffset="${dashOffsetVal}" 
+                        class="transition-all duration-500" />
+                `;
+            });
+
+            document.getElementById('kumulatifBarContainer').innerHTML = barHtml;
+            document.getElementById('donutChart').innerHTML = donutSvgHtml || `<circle cx="50" cy="50" r="40" fill="transparent" stroke="#e2e8f0" stroke-width="16" />`;
+
+            // Analisis Daya Beli & Preferensi Konsumen
+            let analisisHtml = ``;
+            if (totalGlobalRp === 0) {
+                analisisHtml = `<p>Belum ada data input penjualan menu baru yang dimasukkan. Silakan isi kuantiti pada form di atas untuk melihat analisis daya beli secara otomatis.</p>`;
+            } else {
+                // Cari saus tertinggi
+                let sortedSaus = Object.keys(kumulatifSaus).sort((a, b) => kumulatifSaus[b].rp - kumulatifSaus[a].rp);
+                let topSaus = sortedSaus[0];
+                let secondSaus = sortedSaus[1];
+
+                analisisHtml = `
+                    <p>&bull; <strong>Saus Paling Diminati (Top Preference):</strong> Konsumen menunjukkan daya beli tertinggi pada varian <strong class="text-white">${topSaus} Sauce</strong> dengan total omzet kumulatif mencapai Rp ${kumulatifSaus[topSaus].rp.toLocaleString('id-ID')} (${totalGlobalRp > 0 ? ((kumulatifSaus[topSaus].rp / totalGlobalRp) * 100).toFixed(1) : 0}% dari total menu baru).</p>
+                    <p>&bull; <strong>Tren Daya Beli & Segmentasi:</strong> Varian <strong class="text-white">${secondSaus} Sauce</strong> menyusul dengan performa stabil, mencerminkan daya beli pelanggan yang merata terhadap inovasi rasa baru di store ini.</p>
+                    <p>&bull; <strong>Dampak terhadap Net Sales:</strong> Secara keseluruhan, total kontribusi kumulatif dari ketiga jenis saus menu baru ini menyumbang <strong class="text-amber-400">${kontribusiTotal}%</strong> terhadap total keseluruhan omzet store (termasuk produk lama).</p>
+                `;
+            }
+            document.getElementById('analisisDayaBeliText').innerHTML = analisisHtml;
         }
 
         function gantiStoreAtauBulan() {
@@ -441,7 +536,6 @@
             muatDataStoreAktif();
             renderGlobalSummary();
 
-            // Kirim ke Google Apps Script / Google Sheets
             if (WEB_APP_URL) {
                 fetch(WEB_APP_URL, {
                     method: 'POST',
