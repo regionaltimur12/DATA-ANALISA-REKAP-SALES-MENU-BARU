@@ -12,23 +12,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        
-        /* Efek bayangan dan gradasi halus pada logo */
-        .logo-header {
-            filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.3));
-        }
-        
-        /* Gradasi warna menyatu untuk header, overlay di atas background gambar menu */
-        .header-gradient {
-            background: linear-gradient(135deg, rgba(185, 28, 28, 0.98) 0%, rgba(127, 29, 29, 0.95) 100%);
-        }
-
-        /* Styling input angka modern, menghilangkan panah default */
+        .logo-header { filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.3)); }
+        .header-gradient { background: linear-gradient(135deg, rgba(185, 28, 28, 0.98) 0%, rgba(127, 29, 29, 0.95) 100%); }
         input[type=number]::-webkit-inner-spin-button, 
-        input[type=number]::-webkit-outer-spin-button { 
-            -webkit-appearance: none; 
-            margin: 0; 
-        }
+        input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
         input[type=number] { -moz-appearance:textfield; }
     </style>
 </head>
@@ -36,21 +23,18 @@
 
     <!-- HEADER / KOP SURAT PROFESSIONAL -->
     <header class="relative text-white shadow-lg py-8 px-4 md:px-8 header-gradient overflow-hidden border-b-4 border-red-900">
-        <!-- Background Image Overlay -->
         <div class="absolute inset-0 opacity-10 mix-blend-luminosity" style="background-image: url('Gambar menu baru.jpeg'); background-size: cover; background-position: center;"></div>
 
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 relative z-10">
-            <!-- Bagian Kiri: Logo dan Judul -->
             <div class="flex flex-col md:flex-row items-center gap-4 text-center md:text-left">
                 <img src="logo sa'i.png" alt="Logo Ayam Geprek Sa'i" class="h-24 w-auto object-contain logo-header transform hover:scale-105 transition-transform duration-300">
                 <div>
                     <span class="inline-block bg-amber-500 text-red-950 text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-widest shadow-sm">Professional Area Management</span>
                     <h1 class="text-3xl md:text-4xl font-extrabold mt-1.5 tracking-tight text-white drop-shadow-md">AYAM GEPREK SA'I</h1>
-                    <p class="text-red-100 text-sm mt-1 max-w-md font-medium">Sistem Rekapitulasi Penjualan Menu Baru & Analisis Kontribusi Saus</p>
+                    <p class="text-red-100 text-sm mt-1 max-w-md font-medium">Sistem Rekapitulasi & Analisis Shift Jam Sibuk & Per Periode</p>
                 </div>
             </div>
 
-            <!-- Bagian Kanan: Pemilihan Store & Bulan -->
             <div class="bg-red-900/40 backdrop-blur-sm px-6 py-5 rounded-2xl border border-red-700 shadow-xl flex flex-col gap-3 min-w-[300px] text-red-50">
                 <div class="flex justify-between items-center gap-3">
                     <span class="text-xs font-semibold tracking-tight">PILIH STORE:</span>
@@ -82,39 +66,39 @@
         
         <!-- Bar Kartu Ringkasan Store Aktif -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex items-center justify-between transition hover:shadow-md">
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex items-center justify-between">
                 <div>
                     <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Porsi Menu Baru</p>
                     <h3 id="statTotalPcs" class="text-4xl font-extrabold text-slate-900 mt-1.5 tracking-tight">0</h3>
                 </div>
-                <div class="w-16 h-16 bg-red-50 text-red-600 rounded-2xl flex items-center justify-center text-3xl font-black border border-red-100 shadow-inner">
+                <div class="w-16 h-16 bg-red-50 text-red-600 rounded-2xl flex items-center justify-center text-3xl font-black border border-red-100">
                     <i class="fa-solid fa-utensils"></i>
                 </div>
             </div>
-            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex items-center justify-between transition hover:shadow-md">
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex items-center justify-between">
                 <div>
                     <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Omzet Menu Baru (Rp)</p>
                     <h3 id="statTotalRp" class="text-2xl md:text-3xl font-extrabold text-emerald-700 mt-1.5 tracking-tight">Rp 0</h3>
                 </div>
-                <div class="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-3xl font-black border border-emerald-100 shadow-inner">
+                <div class="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-3xl font-black border border-emerald-100">
                     <i class="fa-solid fa-rupiah-sign"></i>
                 </div>
             </div>
-            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex items-center justify-between transition hover:shadow-md">
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex items-center justify-between">
                 <div>
                     <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Net Sales Store</p>
                     <h3 id="statTotalNetSales" class="text-2xl md:text-3xl font-extrabold text-slate-950 mt-1.5 tracking-tight">Rp 0</h3>
                 </div>
-                <div class="w-16 h-16 bg-slate-100 text-slate-600 rounded-2xl flex items-center justify-center text-3xl font-black border border-slate-200 shadow-inner">
+                <div class="w-16 h-16 bg-slate-100 text-slate-600 rounded-2xl flex items-center justify-center text-3xl font-black border border-slate-200">
                     <i class="fa-solid fa-chart-line"></i>
                 </div>
             </div>
-            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex items-center justify-between transition hover:shadow-md">
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex items-center justify-between">
                 <div>
                     <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">% Kontribusi Menu Baru</p>
                     <h3 id="statPersentaseKontribusi" class="text-4xl font-extrabold text-amber-600 mt-1.5 tracking-tight">0.00%</h3>
                 </div>
-                <div class="w-16 h-16 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center text-3xl font-black border border-amber-100 shadow-inner">
+                <div class="w-16 h-16 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center text-3xl font-black border border-amber-100">
                     <i class="fa-solid fa-percent"></i>
                 </div>
             </div>
@@ -124,16 +108,16 @@
         <div class="bg-white rounded-3xl shadow-lg border border-slate-100 overflow-hidden mb-10">
             <div class="bg-slate-950 text-white px-8 py-6 flex flex-col md:flex-row justify-between items-center gap-4 border-b-4 border-amber-500">
                 <h2 class="font-extrabold text-2xl flex items-center gap-3 text-white">
-                    <i class="fa-solid fa-edit text-amber-400"></i> Input Rekap Harian
+                    <i class="fa-solid fa-edit text-amber-400"></i> Input Rekap Harian (Acuan Jam 13.00, 16.00, 20.00)
                 </h2>
                 <div class="flex flex-wrap items-center gap-4 w-full md:w-auto bg-slate-800 p-3 rounded-2xl border border-slate-700">
                     <div>
                         <label class="text-xs text-slate-300 font-semibold block mb-1">Tanggal:</label>
-                        <select id="inputTanggal" class="bg-slate-900 text-white px-4 py-2 rounded-xl border border-slate-700 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-amber-400"></select>
+                        <select id="inputTanggal" class="bg-slate-900 text-white px-4 py-2 rounded-xl border border-slate-700 text-sm font-bold focus:outline-none"></select>
                     </div>
                     <div>
                         <label class="text-xs text-slate-300 font-semibold block mb-1">Nama Kasir/PIC:</label>
-                        <input type="text" id="inputKasir" placeholder="Contoh: Andi Setiawan" class="bg-slate-900 text-white px-4 py-2 rounded-xl border border-slate-700 text-sm w-44 focus:outline-none focus:ring-2 focus:ring-amber-400 font-medium">
+                        <input type="text" id="inputKasir" placeholder="Contoh: Andi" class="bg-slate-900 text-white px-4 py-2 rounded-xl border border-slate-700 text-sm w-40 focus:outline-none font-medium">
                     </div>
                 </div>
             </div>
@@ -151,7 +135,7 @@
                 </div>
                 <div class="flex items-center gap-3 w-full md:w-auto bg-white p-3 rounded-2xl border border-red-100 shadow-inner">
                     <span class="text-lg font-black text-red-700">Rp</span>
-                    <input type="number" id="inputNetSalesTotal" placeholder="Ex: 5200000" class="w-full md:w-56 bg-transparent border-none px-2 py-2 text-2xl font-black text-slate-950 focus:ring-0 focus:outline-none text-right">
+                    <input type="number" id="inputNetSalesTotal" placeholder="Ex: 5200000" class="w-full md:w-56 bg-transparent border-none px-2 py-2 text-2xl font-black text-slate-950 focus:outline-none text-right">
                 </div>
             </div>
 
@@ -171,7 +155,7 @@
                         </tr>
                     </thead>
                     <tbody id="menuTableBody" class="divide-y divide-slate-100 text-sm font-medium text-slate-800">
-                        <!-- Baris Menu diisi lewat JS -->
+                        <!-- Diisi JS -->
                     </tbody>
                     <tfoot class="bg-slate-50 border-t-2 border-slate-200 font-extrabold text-slate-900">
                         <tr>
@@ -183,61 +167,82 @@
                 </table>
             </div>
 
-            <!-- TOMBOL AKSI -->
             <div class="p-6 bg-white border-t border-slate-100 flex flex-wrap justify-between items-center gap-4">
-                <div class="flex items-center gap-3 text-slate-500 text-xs font-medium">
-                    <i class="fa-solid fa-info-circle text-red-500"></i>
-                    <p>Pastikan data sudah benar sebelum menyimpan. Data tersimpan otomatis ke Google Sheets.</p>
-                </div>
+                <p class="text-xs text-slate-500 font-medium"><i class="fa-solid fa-info-circle text-red-500 mr-1"></i> Data tersimpan otomatis secara lokal dan tersinkron ke Google Sheets.</p>
                 <div class="flex gap-3 w-full md:w-auto">
-                    <button type="button" onclick="resetForm()" class="flex-1 md:flex-none px-6 py-3.5 rounded-2xl border-2 border-slate-300 font-bold text-slate-600 hover:bg-slate-100 transition flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-rotate-right"></i> Reset
-                    </button>
-                    <button type="button" onclick="simpanData()" class="flex-1 md:flex-none px-8 py-3.5 rounded-2xl bg-red-950 text-white font-extrabold hover:bg-red-800 shadow-md transition flex items-center justify-center gap-2 transform hover:-translate-y-0.5">
+                    <button type="button" onclick="resetForm()" class="flex-1 md:flex-none px-6 py-3.5 rounded-2xl border-2 border-slate-300 font-bold text-slate-600 hover:bg-slate-100 transition">Reset</button>
+                    <button type="button" onclick="simpanData()" class="flex-1 md:flex-none px-8 py-3.5 rounded-2xl bg-red-950 text-white font-extrabold hover:bg-red-800 shadow-md transition flex items-center justify-center gap-2">
                         <i class="fa-solid fa-floppy-disk"></i> Simpan Data Hari Ini
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- DIAGRAM & ANALISIS KUMULATIF 3 SAUS UTAMA -->
+        <!-- ANALISIS KOMULATIF 3 JENIS SAUS -->
         <div class="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mb-10">
             <h3 class="font-extrabold text-2xl text-slate-950 flex items-center gap-3 mb-3">
-                <i class="fa-solid fa-chart-pie text-red-600"></i> Analisis Performa Kumulatif Saus
+                <i class="fa-solid fa-chart-pie text-red-600"></i> Analisis Performa Kumulatif 3 Jenis Saus Utama
             </h3>
-            <p class="text-sm text-slate-600 mb-8 max-w-3xl font-medium">Visualisasi kontribusi omzet kumulatif dari ketiga varian saus utama terhadap total penjualan menu baru dan persentasenya terhadap total Net Sales Store.</p>
+            <p class="text-sm text-slate-600 mb-8 font-medium">Akumulasi omzet berdasarkan varian Hot Chili, Butter, dan Garlic Sauce.</p>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center mb-10 bg-slate-50/50 p-6 rounded-3xl border border-slate-100">
-                <div id="kumulatifBarContainer" class="space-y-5">
-                    <!-- Diisi via JS -->
-                </div>
-
+                <div id="kumulatifBarContainer" class="space-y-5"></div>
                 <div class="flex flex-col items-center justify-center p-8 border-l-2 border-dashed border-slate-200">
-                    <h4 class="font-bold text-sm text-slate-600 mb-6 uppercase tracking-wider">Share Omzet Menu Baru</h4>
+                    <h4 class="font-bold text-sm text-slate-600 mb-6 uppercase tracking-wider">Share Omzet Saus</h4>
                     <div class="relative w-52 h-52 flex items-center justify-center drop-shadow-lg">
-                        <svg id="donutChart" class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                            <!-- SVG Donut Paths -->
-                        </svg>
+                        <svg id="donutChart" class="w-full h-full transform -rotate-90" viewBox="0 0 100 100"></svg>
                         <div class="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
                             <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">TOTAL MENU</span>
-                            <span id="donutTotalOmzet" class="text-2xl font-black text-slate-950 leading-tight">Rp 0</span>
+                            <span id="donutTotalOmzet" class="text-xl font-black text-slate-950 leading-tight">Rp 0</span>
                         </div>
                     </div>
                     <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 mt-8 text-sm font-bold text-slate-700">
-                        <div class="flex items-center gap-2.5"><span class="w-4 h-4 rounded-full bg-red-600 inline-block border-2 border-white ring-2 ring-red-600/30"></span> Hot Chili</div>
-                        <div class="flex items-center gap-2.5"><span class="w-4 h-4 rounded-full bg-amber-500 inline-block border-2 border-white ring-2 ring-amber-500/30"></span> Butter</div>
-                        <div class="flex items-center gap-2.5"><span class="w-4 h-4 rounded-full bg-emerald-600 inline-block border-2 border-white ring-2 ring-emerald-600/30"></span> Garlic</div>
+                        <div class="flex items-center gap-2"><span class="w-4 h-4 rounded-full bg-red-600 inline-block"></span> Hot Chili</div>
+                        <div class="flex items-center gap-2"><span class="w-4 h-4 rounded-full bg-amber-500 inline-block"></span> Butter</div>
+                        <div class="flex items-center gap-2"><span class="w-4 h-4 rounded-full bg-emerald-600 inline-block"></span> Garlic</div>
                     </div>
                 </div>
             </div>
 
-            <div class="bg-slate-950 text-slate-100 p-8 rounded-3xl shadow-inner border-4 border-amber-400/80">
-                <h4 class="font-black text-xl uppercase tracking-wider text-amber-400 mb-5 flex items-center gap-3">
-                    <i class="fa-solid fa-lightbulb"></i> Analisis Strategis & Preferensi Konsumen
+            <div class="bg-slate-950 text-slate-100 p-8 rounded-3xl border-4 border-amber-400/80">
+                <h4 class="font-black text-xl uppercase tracking-wider text-amber-400 mb-4 flex items-center gap-3">
+                    <i class="fa-solid fa-lightbulb"></i> Keterangan & Preferensi Konsumen
                 </h4>
-                <div id="analisisDayaBeliText" class="text-sm text-slate-300 leading-relaxed space-y-3 font-medium">
-                    <!-- Diisi via JS -->
+                <div id="analisisDayaBeliText" class="text-sm text-slate-300 leading-relaxed space-y-2 font-medium"></div>
+            </div>
+        </div>
+
+        <!-- ANALISIS SHIFT JAM SIBUK (13.00, 16.00, 20.00) - BARU -->
+        <div class="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mb-10">
+            <h3 class="font-extrabold text-2xl text-slate-950 flex items-center gap-3 mb-2">
+                <i class="fa-solid fa-clock text-blue-600"></i> Analisis Performa & Persentase Shift Jam Sibuk (Peak Hours)
+            </h3>
+            <p class="text-sm text-slate-600 mb-8 font-medium">Acuan jam keramaian berdasarkan akumulasi transaksi pada jam 13.00, 16.00, dan 20.00.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8" id="shiftCardContainer">
+                <!-- Diisi via JS -->
+            </div>
+            
+            <div class="bg-blue-50 border border-blue-200 text-blue-900 p-6 rounded-2xl">
+                <h4 class="font-extrabold text-base mb-2 flex items-center gap-2"><i class="fa-solid fa-info-circle"></i> Kesimpulan Acuan Shift & Penjadwalan:</h4>
+                <p id="shiftAnalysisSummary" class="text-xs leading-relaxed font-semibold">Belum ada data transaksi jam operasional yang masuk.</p>
+            </div>
+        </div>
+
+        <!-- ANALISIS KUMULATIF PER PERIODE BULANAN (1 s.d. 4) - BARU -->
+        <div class="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mb-10">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6 pb-4 border-b border-slate-100">
+                <div>
+                    <h3 class="font-extrabold text-2xl text-slate-950 flex items-center gap-3">
+                        <i class="fa-solid fa-calendar-days text-amber-600"></i> Analisis Kumulatif Per Periode Bulanan
+                    </h3>
+                    <p class="text-sm text-slate-600 mt-1 font-medium">Pecahan rekapitulasi performa bulanan menjadi 4 Periode strategis.</p>
                 </div>
+                <span class="bg-amber-100 text-amber-800 text-xs font-extrabold px-4 py-2 rounded-xl">Area: <span id="lblStorePeriodeText">AGS Megantoro Nganjuk</span></span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8" id="periodeCardContainer">
+                <!-- Diisi via JS -->
             </div>
         </div>
 
@@ -264,9 +269,7 @@
                         </tr>
                     </thead>
                     <tbody id="rekapTableBody" class="divide-y divide-slate-100">
-                        <tr>
-                            <td colspan="6" class="text-center py-10 text-slate-400 font-medium">Belum ada data tersimpan untuk store dan bulan ini.</td>
-                        </tr>
+                        <tr><td colspan="6" class="text-center py-10 text-slate-400 font-medium">Belum ada data tersimpan untuk store dan bulan ini.</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -300,9 +303,7 @@
                             <th class="py-4 px-6 text-center">% Kontribusi</th>
                         </tr>
                     </thead>
-                    <tbody id="globalSummaryTableBody" class="divide-y divide-slate-800/50">
-                        <!-- Diisi via JS untuk 7 store -->
-                    </tbody>
+                    <tbody id="globalSummaryTableBody" class="divide-y divide-slate-800/50"></tbody>
                     <tfoot class="bg-slate-950 font-black text-white border-t-2 border-slate-700 text-base">
                         <tr>
                             <td colspan="3" class="py-5 px-6 text-right uppercase tracking-wider">TOTAL KONSOLIDASI (7 STORE):</td>
@@ -324,24 +325,14 @@
                 <img src="logo sa'i.png" alt="Logo" class="h-8 w-auto opacity-70">
                 <span>&copy; 2026-2027 Ayam Geprek Sa'i Area Management. All Rights Reserved.</span>
             </div>
-            <div class="flex gap-5">
-                <a href="#" class="hover:text-red-700 transition">Panduan Pengguna</a>
-                <a href="#" class="hover:text-red-700 transition">Kebijakan Privasi</a>
-                <a href="#" class="hover:text-red-700 transition">Hubungi IT Support</a>
-            </div>
         </div>
     </footer>
 
     <!-- JAVASCRIPT LOGIC & GOOGLE APPS SCRIPT SYNC -->
     <script>
         const storeList = [
-            "AGS Megantoro Nganjuk",
-            "AGS Caruban",
-            "AGS Babat Tanggul",
-            "AGS Sunan Drajat",
-            "AGS Blitar Patok",
-            "AGS Wates Kediri",
-            "AGS Sragen A Yani"
+            "AGS Megantoro Nganjuk", "AGS Caruban", "AGS Babat Tanggul",
+            "AGS Sunan Drajat", "AGS Blitar Patok", "AGS Wates Kediri", "AGS Sragen A Yani"
         ];
 
         const menuList = [
@@ -368,7 +359,6 @@
             { category: "4. PAKET MENU BARU", name: "PAKET 3 - GARLIC SAUCE", price: 24000, sausType: "Garlic" }
         ];
 
-        // URL Google Apps Script Anda
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx9hLOdxcqShNug3P33eyjz8pkPNHAGHSiQmA9sitZhFqA6MVczOcKBmU6zfL0vEGFc/exec";
 
         function initTanggal() {
@@ -502,27 +492,18 @@
             document.getElementById('kumulatifBarContainer').innerHTML = barHtml;
             document.getElementById('donutChart').innerHTML = donutSvgHtml || `<circle cx="50" cy="50" r="40" fill="transparent" stroke="#e2e8f0" stroke-width="16" />`;
 
-            let analisisHtml = ``;
-            if (totalGlobalRp === 0) {
-                analisisHtml = `<p>Belum ada data input penjualan menu baru yang dimasukkan. Silakan isi kuantiti pada form di atas untuk melihat analisis daya beli secara otomatis.</p>`;
-            } else {
-                let sortedSaus = Object.keys(kumulatifSaus).sort((a, b) => kumulatifSaus[b].rp - kumulatifSaus[a].rp);
-                let topSaus = sortedSaus[0];
-                let secondSaus = sortedSaus[1];
-
-                analisisHtml = `
-                    <p>&bull; <strong>Saus Paling Diminati (Top Preference):</strong> Konsumen menunjukkan daya beli tertinggi pada varian <strong class="text-amber-400">${topSaus} Sauce</strong> dengan total omzet kumulatif mencapai Rp ${kumulatifSaus[topSaus].rp.toLocaleString('id-ID')} (${totalGlobalRp > 0 ? ((kumulatifSaus[topSaus].rp / totalGlobalRp) * 100).toFixed(1) : 0}% dari total menu baru).</p>
-                    <p>&bull; <strong>Tren Daya Beli & Segmentasi:</strong> Varian <strong class="text-amber-300">${secondSaus} Sauce</strong> menyusul dengan performa stabil, mencerminkan daya beli pelanggan yang merata terhadap inovasi rasa baru di store ini.</p>
-                    <p>&bull; <strong>Dampak terhadap Net Sales:</strong> Secara keseluruhan, total kontribusi kumulatif dari ketiga jenis saus menu baru ini menyumbang <strong class="text-amber-400">${kontribusiTotal}%</strong> terhadap total keseluruhan omzet store.</p>
-                `;
-            }
-            document.getElementById('analisisDayaBeliText').innerHTML = analisisHtml;
+            let sortedSaus = Object.keys(kumulatifSaus).sort((a, b) => kumulatifSaus[b].rp - kumulatifSaus[a].rp);
+            document.getElementById('analisisDayaBeliText').innerHTML = totalGlobalRp === 0 ? 
+                `<p>Belum ada data input penjualan menu baru yang dimasukkan.</p>` :
+                `<p>&bull; <strong>Saus Paling Diminati:</strong> Konsumen menunjukkan daya beli tertinggi pada varian <strong class="text-amber-400">${sortedSaus[0]} Sauce</strong> dengan omzet kumulatif Rp ${kumulatifSaus[sortedSaus[0]].rp.toLocaleString('id-ID')}.</p>
+                 <p>&bull; <strong>Kontribusi Omzet:</strong> Inovasi saus menu baru menyumbang <strong class="text-amber-400">${kontribusiTotal}%</strong> terhadap total Net Sales Store.</p>`;
         }
 
         function gantiStoreAtauBulan() {
             const store = document.getElementById('selectStore').value;
             const bulan = document.getElementById('selectBulan').value;
             document.getElementById('lblStoreAktifText').textContent = store;
+            document.getElementById('lblStorePeriodeText').textContent = store;
             document.getElementById('lblBulanGlobal').textContent = bulan;
             muatDataStoreAktif();
             renderGlobalSummary();
@@ -531,24 +512,33 @@
         function simpanData() {
             const store = document.getElementById('selectStore').value;
             const bulan = document.getElementById('selectBulan').value;
-            const tanggal = document.getElementById('inputTanggal').value;
+            const tanggal = parseInt(document.getElementById('inputTanggal').value);
             const kasir = document.getElementById('inputKasir').value || "Admin / PIC";
             const netSalesTotal = parseFloat(document.getElementById('inputNetSalesTotal').value) || 0;
             
             let detailPenjualan = [];
             let totalPcs = 0;
             let totalRp = 0;
+            let totalJam13 = 0;
+            let totalJam16 = 0;
+            let totalJam20 = 0;
 
             menuList.forEach((item, index) => {
                 let q13 = parseInt(document.querySelector(`input[data-index="${index}"][data-time="13"]`).value) || 0;
                 let q16 = parseInt(document.querySelector(`input[data-index="${index}"][data-time="16"]`).value) || 0;
                 let q20 = parseInt(document.querySelector(`input[data-index="${index}"][data-time="20"]`).value) || 0;
+                
                 let sumPcs = q13 + q16 + q20;
+                let sumRp = sumPcs * item.price;
+
+                totalJam13 += (q13 * item.price);
+                totalJam16 += (q16 * item.price);
+                totalJam20 += (q20 * item.price);
 
                 if(sumPcs > 0) {
-                    detailPenjualan.push({ name: item.name, q13, q16, q20, sumPcs, sumRp: sumPcs * item.price });
+                    detailPenjualan.push({ name: item.name, q13, q16, q20, sumPcs, sumRp });
                     totalPcs += sumPcs;
-                    totalRp += sumPcs * item.price;
+                    totalRp += sumRp;
                 }
             });
 
@@ -561,18 +551,22 @@
                 id: Date.now(),
                 store,
                 bulan,
+                tanggalNum: tanggal,
                 tanggal: `Tgl ${tanggal} ${bulan}`,
                 kasir,
                 netSalesTotal,
                 totalPcs,
                 totalRp,
+                jam13: totalJam13,
+                jam16: totalJam16,
+                jam20: totalJam20,
                 kontribusi: ((totalRp / netSalesTotal) * 100).toFixed(2),
                 detail: detailPenjualan
             };
 
             let storageKey = `rekap_sai_${store.replace(/\s+/g, '_')}_${bulan.replace(/\s+/g, '_')}`;
             let savedRecords = JSON.parse(localStorage.getItem(storageKey)) || [];
-            savedRecords = savedRecords.filter(item => item.tanggal !== dataRecord.tanggal);
+            savedRecords = savedRecords.filter(item => item.tanggalNum !== tanggal);
             savedRecords.push(dataRecord);
             localStorage.setItem(storageKey, JSON.stringify(savedRecords));
 
@@ -586,9 +580,7 @@
                     mode: 'no-cors',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(dataRecord)
-                }).then(() => {
-                    console.log("Data berhasil disinkronkan ke Google Sheets!");
-                }).catch(err => console.error("Gagal sinkron ke Apps Script:", err));
+                }).catch(err => console.error("Gagal sinkron:", err));
             }
         }
 
@@ -599,8 +591,13 @@
             const tbody = document.getElementById('rekapTableBody');
             let savedRecords = JSON.parse(localStorage.getItem(storageKey)) || [];
 
+            // Urutkan berdasarkan tanggal
+            savedRecords.sort((a, b) => a.tanggalNum - b.tanggalNum);
+
             if(savedRecords.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="6" class="text-center py-10 text-slate-400 font-medium">Belum ada data tersimpan untuk ${store} pada ${bulan}.</td></tr>`;
+                renderShiftAnalysis(savedRecords);
+                renderPeriodeAnalysis(savedRecords);
                 return;
             }
 
@@ -622,6 +619,89 @@
                 `;
                 tbody.appendChild(tr);
             });
+
+            renderShiftAnalysis(savedRecords);
+            renderPeriodeAnalysis(savedRecords);
+        }
+
+        // Render Analisis Shift Jam Sibuk (13.00, 16.00, 20.00)
+        function renderShiftAnalysis(records) {
+            let sum13 = 0, sum16 = 0, sum20 = 0;
+            records.forEach(r => {
+                sum13 += (r.jam13 || 0);
+                sum16 += (r.jam16 || 0);
+                sum20 += (r.jam20 || 0);
+            });
+            let totalShiftRp = sum13 + sum16 + sum20;
+
+            let p13 = totalShiftRp > 0 ? ((sum13 / totalShiftRp) * 100).toFixed(1) : 0;
+            let p16 = totalShiftRp > 0 ? ((sum16 / totalShiftRp) * 100).toFixed(1) : 0;
+            let p20 = totalShiftRp > 0 ? ((sum20 / totalShiftRp) * 100).toFixed(1) : 0;
+
+            document.getElementById('shiftCardContainer').innerHTML = `
+                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
+                    <p class="text-xs font-bold text-slate-400 uppercase">Jam 13.00 (Shift Siang)</p>
+                    <h4 class="text-2xl font-extrabold text-slate-900 mt-1">Rp ${sum13.toLocaleString('id-ID')}</h4>
+                    <p class="text-xs font-bold text-blue-600 mt-2">Kontribusi: ${p13}%</p>
+                </div>
+                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
+                    <p class="text-xs font-bold text-slate-400 uppercase">Jam 16.00 (Shift Sore)</p>
+                    <h4 class="text-2xl font-extrabold text-slate-900 mt-1">Rp ${sum16.toLocaleString('id-ID')}</h4>
+                    <p class="text-xs font-bold text-blue-600 mt-2">Kontribusi: ${p16}%</p>
+                </div>
+                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
+                    <p class="text-xs font-bold text-slate-400 uppercase">Jam 20.00 (Shift Malam)</p>
+                    <h4 class="text-2xl font-extrabold text-slate-900 mt-1">Rp ${sum20.toLocaleString('id-ID')}</h4>
+                    <p class="text-xs font-bold text-blue-600 mt-2">Kontribusi: ${p20}%</p>
+                </div>
+            `;
+
+            let peakTime = "Belum ada data";
+            if (totalShiftRp > 0) {
+                let maxVal = Math.max(sum13, sum16, sum20);
+                if (maxVal === sum13) peakTime = "Jam 13.00 (Siang)";
+                else if (maxVal === sum16) peakTime = "Jam 16.00 (Sore)";
+                else peakTime = "Jam 20.00 (Malam)";
+            }
+
+            document.getElementById('shiftAnalysisSummary').innerHTML = totalShiftRp === 0 ? 
+                "Belum ada data transaksi jam operasional yang masuk." :
+                `Berdasarkan data kumulatif store ini, jam keramaian (peak hours) tertinggi terjadi pada <strong>${peakTime}</strong>. Gunakan acuan ini untuk penjadwalan kesiapan stok bahan baku saus dan penambahan tenaga kerja shift terkait.`;
+        }
+
+        // Render Analisis Kumulatif Per Periode (1-7, 8-14, 15-21, 22-Akhir)
+        function renderPeriodeAnalysis(records) {
+            let periods = [
+                { title: "Periode 1 (Tgl 1-7)", start: 1, end: 7, omzet: 0, porsi: 0, count: 0 },
+                { title: "Periode 2 (Tgl 8-14)", start: 8, end: 14, omzet: 0, porsi: 0, count: 0 },
+                { title: "Periode 3 (Tgl 15-21)", start: 15, end: 21, omzet: 0, porsi: 0, count: 0 },
+                { title: "Periode 4 (Tgl 22-Akhir)", start: 22, end: 31, omzet: 0, porsi: 0, count: 0 }
+            ];
+
+            records.forEach(r => {
+                let t = r.tanggalNum;
+                let p = periods.find(x => t >= x.start && t <= x.end);
+                if (p) {
+                    p.omzet += r.totalRp;
+                    p.porsi += r.totalPcs;
+                    p.count++;
+                }
+            });
+
+            let periodeHtml = '';
+            periods.forEach(p => {
+                periodeHtml += `
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
+                        <span class="text-[10px] font-extrabold uppercase bg-amber-100 text-amber-800 px-2.5 py-1 rounded-full">${p.title}</span>
+                        <h4 class="text-xl font-extrabold text-slate-900 mt-3">Rp ${p.omzet.toLocaleString('id-ID')}</h4>
+                        <div class="mt-3 text-xs text-slate-500 font-semibold space-y-1">
+                            <p>Total Porsi: <strong class="text-slate-800">${p.porsi} PCS</strong></p>
+                            <p>Hari Input: <strong class="text-slate-800">${p.count} Hari</strong></p>
+                        </div>
+                    </div>
+                `;
+            });
+            document.getElementById('periodeCardContainer').innerHTML = periodeHtml;
         }
 
         function hapusRecord(id, store, bulan) {
