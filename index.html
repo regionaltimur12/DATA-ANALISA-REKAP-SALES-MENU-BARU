@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aplikasi Input & Rekap Penjualan Menu Baru - Ayam Geprek Sa'i</title>
-    <!-- Tailwind CSS CDN untuk Desain Modern & Elegan -->
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- Google Fonts: Plus Jakarta Sans -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -22,11 +22,21 @@
             <div>
                 <span class="bg-red-800 text-red-100 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">Aplikasi Operasional Area</span>
                 <h1 class="text-2xl md:text-3xl font-bold mt-1 tracking-tight">AYAM GEPREK SA'I</h1>
-                <p class="text-red-100 text-sm">Form Rekapitulasi & Input Penjualan Produk Menu Baru</p>
+                <p class="text-red-100 text-sm">Form Rekapitulasi & Persentase Penjualan Menu Baru vs Total Net Sales</p>
             </div>
-            <div class="bg-red-800/80 px-4 py-3 rounded-xl border border-red-600 text-sm flex flex-col gap-1 min-w-[240px]">
-                <div class="flex justify-between"><span>Store:</span> <strong id="lblStore">Magetan / Nganjuk</strong></div>
-                <div class="flex justify-between"><span>Bulan:</span> <strong>November 2026</strong></div>
+            <div class="bg-red-800/80 px-4 py-3 rounded-xl border border-red-600 text-sm flex flex-col gap-2 min-w-[260px]">
+                <div class="flex justify-between items-center">
+                    <span>Store:</span> <strong id="lblStore">Magetan / Nganjuk</strong>
+                </div>
+                <div class="flex justify-between items-center gap-2">
+                    <span>Pilih Bulan:</span>
+                    <select id="selectBulan" onchange="gantiBulan()" class="bg-red-900 text-white text-xs px-2 py-1 rounded border border-red-500 font-semibold focus:outline-none">
+                        <option value="November 2026">November 2026</option>
+                        <option value="Desember 2026">Desember 2026</option>
+                        <option value="Januari 2027">Januari 2027</option>
+                        <option value="Februari 2027">Februari 2027</option>
+                    </select>
+                </div>
             </div>
         </div>
     </header>
@@ -35,10 +45,10 @@
     <main class="max-w-7xl mx-auto w-full p-4 md:p-8 flex-grow">
         
         <!-- Bar Kartu Ringkasan (Summary Cards) -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex items-center justify-between">
                 <div>
-                    <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Porsi (PCS)</p>
+                    <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Porsi Menu Baru</p>
                     <h3 id="statTotalPcs" class="text-3xl font-bold text-slate-900 mt-1">0</h3>
                 </div>
                 <div class="w-12 h-12 bg-red-50 text-red-600 rounded-xl flex items-center justify-center text-xl font-bold">
@@ -47,8 +57,8 @@
             </div>
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex items-center justify-between">
                 <div>
-                    <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Pendapatan (Rp)</p>
-                    <h3 id="statTotalRp" class="text-3xl font-bold text-emerald-600 mt-1">Rp 0</h3>
+                    <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Omzet Menu Baru (Rp)</p>
+                    <h3 id="statTotalRp" class="text-2xl md:text-3xl font-bold text-emerald-600 mt-1">Rp 0</h3>
                 </div>
                 <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center text-xl font-bold">
                     <i class="fa-solid fa-rupiah-sign"></i>
@@ -56,38 +66,62 @@
             </div>
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex items-center justify-between">
                 <div>
-                    <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Status Sinkronisasi</p>
-                    <h3 class="text-sm font-bold text-blue-600 mt-1 flex items-center gap-2">
-                        <span class="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></span> Siap Kirim / LocalStorage
-                    </h3>
+                    <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Net Sales Keseluruhan</p>
+                    <h3 id="statTotalNetSales" class="text-2xl md:text-3xl font-bold text-blue-600 mt-1">Rp 0</h3>
                 </div>
                 <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-xl font-bold">
-                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">% Kontribusi Menu Baru</p>
+                    <h3 id="statPersentaseKontribusi" class="text-3xl font-bold text-amber-600 mt-1">0.00%</h3>
+                </div>
+                <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-percent"></i>
                 </div>
             </div>
         </div>
 
-        <!-- FORM INPUT HARIAN PER JAM -->
+        <!-- FORM INPUT HARIAN PER JAM & TOTAL KESELURUHAN -->
         <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden mb-8">
             <div class="bg-slate-900 text-white px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
                 <h2 class="font-bold text-lg flex items-center gap-2">
-                    <i class="fa-solid fa-pen-to-square text-red-500"></i> Form Input Harian (Acuan Jam 13.00 - 16.00 - 20.00)
+                    <i class="fa-solid fa-pen-to-square text-red-500"></i> Form Input Harian (Jam 13.00 - 16.00 - 20.00) & Total Net Sales
                 </h2>
-                <div class="flex items-center gap-3 w-full md:w-auto">
+                <div class="flex flex-wrap items-center gap-3 w-full md:w-auto">
                     <div>
                         <label class="text-xs text-slate-300 mr-2">Tanggal:</label>
-                        <select id="inputTanggal" class="bg-slate-800 text-white px-3 py-1.5 rounded-lg border border-slate-700 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-red-500">
-                            <!-- Javascript akan mengisi tanggal 1-31 -->
+                        <select id="inputTanggal" class="bg-slate-800 text-white px-3 py-1.5 rounded-lg border border-slate-700 text-sm font-semibold focus:outline-none">
+                            <!-- Diisi JS -->
                         </select>
                     </div>
                     <div>
                         <label class="text-xs text-slate-300 mr-2">Kasir/PIC:</label>
-                        <input type="text" id="inputKasir" placeholder="Nama Kasir" class="bg-slate-800 text-white px-3 py-1.5 rounded-lg border border-slate-700 text-sm w-36 focus:outline-none focus:ring-2 focus:ring-red-500">
+                        <input type="text" id="inputKasir" placeholder="Nama Kasir" class="bg-slate-800 text-white px-3 py-1.5 rounded-lg border border-slate-700 text-sm w-32 focus:outline-none">
                     </div>
                 </div>
             </div>
 
-            <!-- TABEL INPUT MENU -->
+            <!-- PANEL INPUT TOTAL NET SALES KESELURUHAN (PEMBANDING) -->
+            <div class="bg-amber-50 border-b border-amber-200 px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-amber-500 text-white rounded-xl flex items-center justify-center text-lg font-bold">
+                        <i class="fa-solid fa-wallet"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-800 text-sm">Total Net Sales Keseluruhan (Termasuk Produk Lama & Menu Baru)</h4>
+                        <p class="text-xs text-slate-500">Masukkan total omzet riil kasir hari ini sebagai acuan perhitungan persentase.</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 w-full md:w-auto">
+                    <span class="text-sm font-bold text-slate-600">Rp</span>
+                    <input type="number" id="inputNetSalesTotal" placeholder="Contoh: 5000000" class="w-full md:w-48 bg-white border border-amber-300 px-3 py-2 rounded-xl text-sm font-bold text-slate-800 focus:ring-2 focus:ring-amber-500 focus:outline-none">
+                </div>
+            </div>
+
+            <!-- TABEL INPUT MENU BARU -->
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse">
                     <thead>
@@ -103,14 +137,14 @@
                         </tr>
                     </thead>
                     <tbody id="menuTableBody" class="divide-y divide-slate-100 text-sm">
-                        <!-- Baris Menu diisi lewat JS sesuai Excel -->
+                        <!-- Baris Menu diisi lewat JS -->
                     </tbody>
                 </table>
             </div>
 
             <!-- TOMBOL AKSI -->
             <div class="p-6 bg-slate-50 border-t border-slate-200 flex flex-wrap justify-between items-center gap-4">
-                <p class="text-xs text-slate-500">* Pastikan kuantiti terisi dengan benar sebelum menekan tombol simpan.</p>
+                <p class="text-xs text-slate-500">* Pastikan total net sales keseluruhan dan kuantiti produk telah terisi sebelum menyimpan.</p>
                 <div class="flex gap-3">
                     <button type="button" onclick="resetForm()" class="px-5 py-2.5 rounded-xl border border-slate-300 font-semibold text-slate-600 hover:bg-slate-100 transition">
                         <i class="fa-solid fa-rotate-right mr-1"></i> Reset Form
@@ -122,30 +156,41 @@
             </div>
         </div>
 
+        <!-- TABEL ANALISIS & DIAGRAM PRESENTASE PRODUK -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
+            <h3 class="font-bold text-lg text-slate-800 flex items-center gap-2 mb-4">
+                <i class="fa-solid fa-chart-pie text-red-600"></i> Diagram & Persentase Kontribusi Terhadap Total Net Sales
+            </h3>
+            <div id="persentaseContainer" class="space-y-4">
+                <!-- Bar persentase produk di-generate via JS -->
+            </div>
+        </div>
+
         <!-- TABEL REKAPITULASI RIWAYAT INPUT -->
         <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="font-bold text-lg text-slate-800 flex items-center gap-2">
-                    <i class="fa-solid fa-database text-blue-600"></i> Riwayat Rekap Data Tersimpan
+                    <i class="fa-solid fa-database text-blue-600"></i> Riwayat Rekap Data Tersimpan (<span id="lblBulanAktif">November 2026</span>)
                 </h3>
                 <button onclick="hapusSemuaData()" class="text-xs text-red-600 hover:text-red-800 font-semibold">
-                    <i class="fa-solid fa-trash-can mr-1"></i> Hapus Semua Data
+                    <i class="fa-solid fa-trash-can mr-1"></i> Hapus Data Bulan Ini
                 </button>
             </div>
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse text-sm">
                     <thead>
                         <tr class="bg-slate-100 text-slate-600 text-xs font-bold uppercase tracking-wider border-b border-slate-200">
-                            <th class="py-3 px-4">Tanggal Input</th>
+                            <th class="py-3 px-4">Tanggal</th>
                             <th class="py-3 px-4">Kasir / PIC</th>
-                            <th class="py-3 px-4 text-center">Total Item Terjual</th>
-                            <th class="py-3 px-4 text-right">Total Net Sales</th>
+                            <th class="py-3 px-4 text-right">Omzet Menu Baru</th>
+                            <th class="py-3 px-4 text-right">Total Net Sales Store</th>
+                            <th class="py-3 px-4 text-center">% Kontribusi</th>
                             <th class="py-3 px-4 text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody id="rekapTableBody" class="divide-y divide-slate-100">
                         <tr>
-                            <td colspan="5" class="text-center py-6 text-slate-400">Belum ada data tersimpan. Silakan isi form di atas.</td>
+                            <td colspan="6" class="text-center py-6 text-slate-400">Belum ada data tersimpan untuk bulan ini.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -156,29 +201,24 @@
 
     <!-- FOOTER -->
     <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-400">
-        &copy; 2026 Ayam Geprek Sa'i Area Magetan & Nganjuk &bull; Sistem Rekapitulasi Penjualan Digital
+        &copy; 2026-2027 Ayam Geprek Sa'i Area Magetan & Nganjuk &bull; Sistem Rekapitulasi Penjualan Digital
     </footer>
 
-    <!-- JAVASCRIPT LOGIC & GOOGLE APPS SCRIPT INTEGRATION -->
+    <!-- JAVASCRIPT LOGIC -->
     <script>
-        // Data Master Menu sesuai file Excel Anda
         const menuList = [
-            // Hot Chili Sauce
             { category: "1. HOT CHILI SAUCE", name: "HOT CHILI SAUCE SAYAP", price: 12000 },
             { category: "1. HOT CHILI SAUCE", name: "HOT CHILI SAUCE PAHA BAWAH", price: 13000 },
             { category: "1. HOT CHILI SAUCE", name: "HOT CHILI SAUCE PAHA ATAS", price: 17000 },
             { category: "1. HOT CHILI SAUCE", name: "HOT CHILI SAUCE DADA", price: 17000 },
-            // Butter Sauce
             { category: "2. BUTTER SAUCE", name: "BUTTER SAUCE SAYAP", price: 12000 },
             { category: "2. BUTTER SAUCE", name: "BUTTER SAUCE PAHA BAWAH", price: 13000 },
             { category: "2. BUTTER SAUCE", name: "BUTTER SAUCE PAHA ATAS", price: 17000 },
             { category: "2. BUTTER SAUCE", name: "BUTTER SAUCE DADA", price: 17000 },
-            // Garlic Sauce
             { category: "3. GARLIC SAUCE", name: "GARLIC SAUCE SAYAP", price: 12000 },
             { category: "3. GARLIC SAUCE", name: "GARLIC SAUCE PAHA BAWAH", price: 13000 },
             { category: "3. GARLIC SAUCE", name: "GARLIC SAUCE PAHA ATAS", price: 17000 },
             { category: "3. GARLIC SAUCE", name: "GARLIC SAUCE DADA", price: 17000 },
-            // Paket Menu
             { category: "4. PAKET MENU BARU", name: "PAKET 1 - HOT CHILI SAUCE", price: 17000 },
             { category: "4. PAKET MENU BARU", name: "PAKET 1 - BUTTER SAUCE", price: 17000 },
             { category: "4. PAKET MENU BARU", name: "PAKET 1 - GARLIC SAUCE", price: 17000 },
@@ -190,25 +230,23 @@
             { category: "4. PAKET MENU BARU", name: "PAKET 3 - GARLIC SAUCE", price: 24000 }
         ];
 
-        // Inisialisasi Tanggal 1 s.d. 31
         function initTanggal() {
             const select = document.getElementById('inputTanggal');
+            select.innerHTML = '';
             for (let i = 1; i <= 31; i++) {
                 let opt = document.createElement('option');
                 opt.value = i;
-                opt.textContent = `Tanggal ${i} November 2026`;
+                opt.textContent = `Tanggal ${i}`;
                 select.appendChild(opt);
             }
         }
 
-        // Render Baris Menu ke dalam Tabel HTML
         function renderTable() {
             const tbody = document.getElementById('menuTableBody');
             tbody.innerHTML = '';
             let lastCat = '';
 
             menuList.forEach((item, index) => {
-                // Buat Header Kategori jika berganti
                 if (item.category !== lastCat) {
                     lastCat = item.category;
                     let catRow = document.createElement('tr');
@@ -222,31 +260,27 @@
                     <td class="py-2.5 px-4 text-center text-slate-500 font-medium">${index + 1}</td>
                     <td class="py-2.5 px-4 font-semibold text-slate-700">${item.name}</td>
                     <td class="py-2.5 px-4 text-right text-slate-500">Rp ${item.price.toLocaleString('id-ID')}</td>
-                    <td class="py-2.5 px-4 text-center">
-                        <input type="number" min="0" value="0" data-index="${index}" data-time="13" class="qty-input w-20 text-center border border-slate-300 rounded-lg py-1 px-2 focus:ring-2 focus:ring-red-500 focus:outline-none">
-                    </td>
-                    <td class="py-2.5 px-4 text-center">
-                        <input type="number" min="0" value="0" data-index="${index}" data-time="16" class="qty-input w-20 text-center border border-slate-300 rounded-lg py-1 px-2 focus:ring-2 focus:ring-red-500 focus:outline-none">
-                    </td>
-                    <td class="py-2.5 px-4 text-center">
-                        <input type="number" min="0" value="0" data-index="${index}" data-time="20" class="qty-input w-20 text-center border border-slate-300 rounded-lg py-1 px-2 focus:ring-2 focus:ring-red-500 focus:outline-none">
-                    </td>
+                    <td class="py-2.5 px-4 text-center"><input type="number" min="0" value="0" data-index="${index}" data-time="13" class="qty-input w-20 text-center border border-slate-300 rounded-lg py-1 px-2 focus:ring-2 focus:ring-red-500 focus:outline-none"></td>
+                    <td class="py-2.5 px-4 text-center"><input type="number" min="0" value="0" data-index="${index}" data-time="16" class="qty-input w-20 text-center border border-slate-300 rounded-lg py-1 px-2 focus:ring-2 focus:ring-red-500 focus:outline-none"></td>
+                    <td class="py-2.5 px-4 text-center"><input type="number" min="0" value="0" data-index="${index}" data-time="20" class="qty-input w-20 text-center border border-slate-300 rounded-lg py-1 px-2 focus:ring-2 focus:ring-red-500 focus:outline-none"></td>
                     <td class="py-2.5 px-4 text-center font-bold text-slate-800" id="row-pcs-${index}">0</td>
                     <td class="py-2.5 px-4 text-right font-bold text-emerald-600" id="row-rp-${index}">Rp 0</td>
                 `;
                 tbody.appendChild(row);
             });
 
-            // Tambahkan event listener untuk kalkulasi real-time saat qty diubah
             document.querySelectorAll('.qty-input').forEach(input => {
                 input.addEventListener('input', hitungTotalBaris);
             });
+            document.getElementById('inputNetSalesTotal').addEventListener('input', hitungTotalBaris);
         }
 
-        // Hitung Total per Baris dan Global secara Real-Time
         function hitungTotalBaris() {
             let totalGlobalPcs = 0;
             let totalGlobalRp = 0;
+            let netSalesTotal = parseFloat(document.getElementById('inputNetSalesTotal').value) || 0;
+
+            let produkPersenHtml = '';
 
             menuList.forEach((item, index) => {
                 let q13 = parseInt(document.querySelector(`input[data-index="${index}"][data-time="13"]`).value) || 0;
@@ -261,16 +295,47 @@
 
                 totalGlobalPcs += sumPcs;
                 totalGlobalRp += sumRp;
+
+                // Hitung persentase terhadap total net sales keseluruhan
+                let persen = netSalesTotal > 0 ? ((sumRp / netSalesTotal) * 100).toFixed(2) : 0;
+
+                if(sumPcs > 0) {
+                    produkPersenHtml += `
+                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 flex flex-col md:flex-row justify-between items-center gap-2">
+                            <div class="w-full md:w-1/3 font-semibold text-slate-700 text-sm">${item.name}</div>
+                            <div class="w-full md:w-1/3 bg-slate-200 rounded-full h-3 overflow-hidden">
+                                <div class="bg-red-600 h-3 rounded-full" style="width: ${Math.min(persen, 100)}%"></div>
+                            </div>
+                            <div class="w-full md:w-1/3 text-right text-xs font-bold text-slate-600">
+                                Rp ${sumRp.toLocaleString('id-ID')} (${persen}% dari Total Sales)
+                            </div>
+                        </div>
+                    `;
+                }
             });
+
+            let kontribusiTotal = netSalesTotal > 0 ? ((totalGlobalRp / netSalesTotal) * 100).toFixed(2) : 0;
 
             document.getElementById('statTotalPcs').textContent = totalGlobalPcs.toLocaleString('id-ID');
             document.getElementById('statTotalRp').textContent = `Rp ${totalGlobalRp.toLocaleString('id-ID')}`;
+            document.getElementById('statTotalNetSales').textContent = `Rp ${netSalesTotal.toLocaleString('id-ID')}`;
+            document.getElementById('statPersentaseKontribusi').textContent = `${kontribusiTotal}%`;
+
+            const containerPersen = document.getElementById('persentaseContainer');
+            containerPersen.innerHTML = produkPersenHtml || `<p class="text-center text-slate-400 py-4 text-sm">Belum ada kuantiti produk yang diisi untuk melihat diagram persentase.</p>`;
         }
 
-        // Fungsi Simpan Data (Masuk ke LocalStorage & Simulasi ke Google Apps Script)
+        function gantiBulan() {
+            const bulan = document.getElementById('selectBulan').value;
+            document.getElementById('lblBulanAktif').textContent = bulan;
+            muatRiwayatData();
+        }
+
         function simpanData() {
+            const bulan = document.getElementById('selectBulan').value;
             const tanggal = document.getElementById('inputTanggal').value;
             const kasir = document.getElementById('inputKasir').value || "Admin / PIC";
+            const netSalesTotal = parseFloat(document.getElementById('inputNetSalesTotal').value) || 0;
             
             let detailPenjualan = [];
             let totalPcs = 0;
@@ -283,65 +348,47 @@
                 let sumPcs = q13 + q16 + q20;
 
                 if(sumPcs > 0) {
-                    detailPenjualan.push({
-                        name: item.name,
-                        q13, q16, q20,
-                        sumPcs,
-                        sumRp: sumPcs * item.price
-                    });
+                    detailPenjualan.push({ name: item.name, q13, q16, q20, sumPcs, sumRp: sumPcs * item.price });
                     totalPcs += sumPcs;
-                    totalPcs += sumPcs; // wait
                     totalRp += sumPcs * item.price;
                 }
             });
 
-            if(detailPenjualan.length === 0) {
-                alert("Mohon isi minimal satu jumlah porsi menu sebelum menyimpan!");
+            if(netSalesTotal <= 0) {
+                alert("Mohon masukkan Total Net Sales Keseluruhan (Omzet Total Store) hari ini!");
                 return;
             }
 
             let dataRecord = {
                 id: Date.now(),
-                tanggal: `Tgl ${tanggal} Nov 2026`,
+                bulan,
+                tanggal: `Tgl ${tanggal} ${bulan}`,
                 kasir,
+                netSalesTotal,
                 totalPcs,
                 totalRp,
+                kontribusi: ((totalRp / netSalesTotal) * 100).toFixed(2),
                 detail: detailPenjualan
             };
 
-            // Simpan ke LocalStorage browser
-            let savedRecords = JSON.parse(localStorage.getItem('rekap_penjualan_sai')) || [];
-            // Cek apakah tanggal yang sama sudah ada, jika ada replace/update
+            let storageKey = `rekap_sai_${bulan.replace(/\s+/g, '_')}`;
+            let savedRecords = JSON.parse(localStorage.getItem(storageKey)) || [];
             savedRecords = savedRecords.filter(item => item.tanggal !== dataRecord.tanggal);
             savedRecords.push(dataRecord);
-            localStorage.setItem('rekap_penjualan_sai', JSON.stringify(savedRecords));
+            localStorage.setItem(storageKey, JSON.stringify(savedRecords));
 
-            alert(`Data Tanggal ${tanggal} November 2026 berhasil disimpan!`);
+            alert(`Data Tanggal ${tanggal} ${bulan} berhasil disimpan!`);
             muatRiwayatData();
-
-            // =========================================================================
-            // INTEGRASI GOOGLE APPS SCRIPT (Opsional/Contoh)
-            // =========================================================================
-            /* 
-            const WEB_APP_URL = "URL_GOOGLE_APPS_SCRIPT_ANDA_DISINI";
-            fetch(WEB_APP_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(dataRecord)
-            }).then(() => {
-                console.log("Data berhasil dikirim ke Google Sheets!");
-            }).catch(err => console.error("Gagal sinkron:", err));
-            */
         }
 
-        // Muat Riwayat Data Tersimpan ke Tabel Bawah
         function muatRiwayatData() {
+            const bulan = document.getElementById('selectBulan').value;
+            const storageKey = `rekap_sai_${bulan.replace(/\s+/g, '_')}`;
             const tbody = document.getElementById('rekapTableBody');
-            let savedRecords = JSON.parse(localStorage.getItem('rekap_penjualan_sai')) || [];
+            let savedRecords = JSON.parse(localStorage.getItem(storageKey)) || [];
 
             if(savedRecords.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" class="text-center py-6 text-slate-400">Belum ada data tersimpan. Silakan isi form di atas.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" class="text-center py-6 text-slate-400">Belum ada data tersimpan untuk ${bulan}.</td></tr>`;
                 return;
             }
 
@@ -352,10 +399,11 @@
                 tr.innerHTML = `
                     <td class="py-3 px-4 font-semibold text-slate-800">${rec.tanggal}</td>
                     <td class="py-3 px-4 text-slate-600">${rec.kasir}</td>
-                    <td class="py-3 px-4 text-center font-bold text-slate-700">${rec.totalPcs} PCS</td>
                     <td class="py-3 px-4 text-right font-bold text-emerald-600">Rp ${rec.totalRp.toLocaleString('id-ID')}</td>
+                    <td class="py-3 px-4 text-right font-bold text-blue-600">Rp ${rec.netSalesTotal.toLocaleString('id-ID')}</td>
+                    <td class="py-3 px-4 text-center font-bold text-amber-600">${rec.kontribusi}%</td>
                     <td class="py-3 px-4 text-center">
-                        <button onclick="hapusRecord(${rec.id})" class="bg-red-50 text-red-600 hover:bg-red-100 p-2 rounded-lg transition" title="Hapus Data">
+                        <button onclick="hapusRecord(${rec.id}, '${bulan}')" class="bg-red-50 text-red-600 hover:bg-red-100 p-2 rounded-lg transition" title="Hapus Data">
                             <i class="fa-solid fa-trash"></i>
                         </button>
                     </td>
@@ -364,18 +412,21 @@
             });
         }
 
-        function hapusRecord(id) {
+        function hapusRecord(id, bulan) {
             if(confirm("Apakah Anda yakin ingin menghapus data rekap tanggal ini?")) {
-                let savedRecords = JSON.parse(localStorage.getItem('rekap_penjualan_sai')) || [];
+                let storageKey = `rekap_sai_${bulan.replace(/\s+/g, '_')}`;
+                let savedRecords = JSON.parse(localStorage.getItem(storageKey)) || [];
                 savedRecords = savedRecords.filter(rec => rec.id !== id);
-                localStorage.setItem('rekap_penjualan_sai', JSON.stringify(savedRecords));
+                localStorage.setItem(storageKey, JSON.stringify(savedRecords));
                 muatRiwayatData();
             }
         }
 
         function hapusSemuaData() {
-            if(confirm("PERINGATAN: Semua riwayat data rekap akan dihapus permanen! Lanjutkan?")) {
-                localStorage.removeItem('rekap_penjualan_sai');
+            const bulan = document.getElementById('selectBulan').value;
+            if(confirm(`PERINGATAN: Semua riwayat rekap bulan ${bulan} akan dihapus permanen!`)) {
+                let storageKey = `rekap_sai_${bulan.replace(/\s+/g, '_')}`;
+                localStorage.removeItem(storageKey);
                 muatRiwayatData();
             }
         }
@@ -383,10 +434,10 @@
         function resetForm() {
             document.querySelectorAll('.qty-input').forEach(input => input.value = 0);
             document.getElementById('inputKasir').value = '';
+            document.getElementById('inputNetSalesTotal').value = '';
             hitungTotalBaris();
         }
 
-        // Jalankan saat halaman dimuat
         window.onload = function() {
             initTanggal();
             renderTable();
