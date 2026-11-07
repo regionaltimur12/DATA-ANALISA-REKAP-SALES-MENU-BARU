@@ -153,7 +153,7 @@
 
             <!-- TOMBOL AKSI -->
             <div class="p-6 bg-slate-50 border-t border-slate-200 flex flex-wrap justify-between items-center gap-4">
-                <p class="text-xs text-slate-500">* Data akan tersimpan secara lokal dan otomatis tersinkron ke Google Sheets jika URL Apps Script aktif.</p>
+                <p class="text-xs text-slate-500">* Data akan tersimpan lokal dan otomatis dikirim langsung ke Google Sheets Anda.</p>
                 <div class="flex gap-3">
                     <button type="button" onclick="resetForm()" class="px-5 py-2.5 rounded-xl border border-slate-300 font-semibold text-slate-600 hover:bg-slate-100 transition">
                         <i class="fa-solid fa-rotate-right mr-1"></i> Reset Form
@@ -179,7 +179,7 @@
         <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="font-bold text-lg text-slate-800 flex items-center gap-2">
-                    <i class="fa-solid database text-blue-600"></i> Riwayat Rekap: <span id="lblStoreAktifText" class="text-red-600 font-extrabold">AGS Megantoro Nganjuk</span>
+                    <i class="fa-solid fa-database text-blue-600"></i> Riwayat Rekap: <span id="lblStoreAktifText" class="text-red-600 font-extrabold">AGS Megantoro Nganjuk</span>
                 </h3>
                 <button onclick="hapusDataStoreAktif()" class="text-xs text-red-600 hover:text-red-800 font-semibold">
                     <i class="fa-solid fa-trash-can mr-1"></i> Hapus Data Store Ini
@@ -284,8 +284,8 @@
             { category: "4. PAKET MENU BARU", name: "PAKET 3 - GARLIC SAUCE", price: 24000 }
         ];
 
-        // URL Google Apps Script Anda (Ganti dengan URL Deployment Apps Script Anda)
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzClswrk8HAfBGwJbaRYaJCislAgPEL9qTQyc8c8saCHYOTCv4z-yS2NvUEJezz1yzn9A/exec";
+        // URL Google Apps Script terbaru Anda
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx9hLOdxcqShNug3P33eyjz8pkPNHAGHSiQmA9sitZhFqA6MVczOcKBmU6zfL0vEGFc/exec";
 
         function initTanggal() {
             const select = document.getElementById('inputTanggal');
@@ -437,7 +437,7 @@
             savedRecords.push(dataRecord);
             localStorage.setItem(storageKey, JSON.stringify(savedRecords));
 
-            alert(`Data ${store} (Tanggal ${tanggal} ${bulan}) berhasil disimpan secara lokal!`);
+            alert(`Data ${store} (Tanggal ${tanggal} ${bulan}) berhasil disimpan!`);
             muatDataStoreAktif();
             renderGlobalSummary();
 
@@ -508,7 +508,6 @@
             }
         }
 
-        // Render Ringkasan Konsolidasi 7 Store di Paling Bawah
         function renderGlobalSummary() {
             const bulan = document.getElementById('selectBulan').value;
             const globalTbody = document.getElementById('globalSummaryTableBody');
@@ -550,7 +549,6 @@
 
             let grandKontribusi = grandTotalNetSales > 0 ? ((grandTotalMenuBaru / grandTotalNetSales) * 100).toFixed(2) : 0;
 
-            // Baris Grand Total di Bawah Tabel Konsolidasi
             let trTotal = document.createElement('tr');
             trTotal.className = "bg-slate-800 font-extrabold text-white";
             trTotal.innerHTML = `
