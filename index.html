@@ -31,7 +31,7 @@
                 <div>
                     <span class="inline-block bg-amber-500 text-red-950 text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-widest shadow-sm">Professional Area Management</span>
                     <h1 class="text-3xl md:text-4xl font-extrabold mt-1.5 tracking-tight text-white drop-shadow-md">AYAM GEPREK SA'I</h1>
-                    <p class="text-red-100 text-sm mt-1 max-w-md font-medium">Sistem Rekapitulasi & Analisis Shift Jam Sibuk & Per Periode</p>
+                    <p class="text-red-100 text-sm mt-1 max-w-md font-medium">Sistem Rekapitulasi & Analisis Target Kontribusi 10%-15% Multi-Store</p>
                 </div>
             </div>
 
@@ -154,9 +154,7 @@
                             <th class="py-4 px-6 text-right">Total Omzet (Rp)</th>
                         </tr>
                     </thead>
-                    <tbody id="menuTableBody" class="divide-y divide-slate-100 text-sm font-medium text-slate-800">
-                        <!-- Diisi JS -->
-                    </tbody>
+                    <tbody id="menuTableBody" class="divide-y divide-slate-100 text-sm font-medium text-slate-800"></tbody>
                     <tfoot class="bg-slate-50 border-t-2 border-slate-200 font-extrabold text-slate-900">
                         <tr>
                             <td colspan="6" class="py-4 px-6 text-right uppercase tracking-wider text-sm">Subtotal Menu Baru:</td>
@@ -212,16 +210,14 @@
             </div>
         </div>
 
-        <!-- ANALISIS SHIFT JAM SIBUK (13.00, 16.00, 20.00) - BARU -->
+        <!-- ANALISIS SHIFT JAM SIBUK (13.00, 16.00, 20.00) -->
         <div class="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mb-10">
             <h3 class="font-extrabold text-2xl text-slate-950 flex items-center gap-3 mb-2">
                 <i class="fa-solid fa-clock text-blue-600"></i> Analisis Performa & Persentase Shift Jam Sibuk (Peak Hours)
             </h3>
             <p class="text-sm text-slate-600 mb-8 font-medium">Acuan jam keramaian berdasarkan akumulasi transaksi pada jam 13.00, 16.00, dan 20.00.</p>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8" id="shiftCardContainer">
-                <!-- Diisi via JS -->
-            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8" id="shiftCardContainer"></div>
             
             <div class="bg-blue-50 border border-blue-200 text-blue-900 p-6 rounded-2xl">
                 <h4 class="font-extrabold text-base mb-2 flex items-center gap-2"><i class="fa-solid fa-info-circle"></i> Kesimpulan Acuan Shift & Penjadwalan:</h4>
@@ -229,7 +225,7 @@
             </div>
         </div>
 
-        <!-- ANALISIS KUMULATIF PER PERIODE BULANAN (1 s.d. 4) - BARU -->
+        <!-- ANALISIS KUMULATIF PER PERIODE BULANAN (1 s.d. 4) -->
         <div class="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mb-10">
             <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6 pb-4 border-b border-slate-100">
                 <div>
@@ -241,9 +237,7 @@
                 <span class="bg-amber-100 text-amber-800 text-xs font-extrabold px-4 py-2 rounded-xl">Area: <span id="lblStorePeriodeText">AGS Megantoro Nganjuk</span></span>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8" id="periodeCardContainer">
-                <!-- Diisi via JS -->
-            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8" id="periodeCardContainer"></div>
         </div>
 
         <!-- TABEL RIWAYAT STORE AKTIF -->
@@ -276,7 +270,7 @@
         </div>
 
         <!-- REKAPITULASI KESELURUHAN (KONSOLIDASI 7 STORE) -->
-        <div class="bg-gradient-to-br from-slate-950 to-slate-900 rounded-3xl shadow-2xl border border-slate-800 p-8 text-white mb-6">
+        <div class="bg-gradient-to-br from-slate-950 to-slate-900 rounded-3xl shadow-2xl border border-slate-800 p-8 text-white mb-10">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8 border-b border-slate-700 pb-6">
                 <div>
                     <span class="inline-block bg-red-700 text-white text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-widest shadow-sm">Area Consolidated Report</span>
@@ -313,6 +307,38 @@
                         </tr>
                     </tfoot>
                 </table>
+            </div>
+        </div>
+
+        <!-- DIAGRAM BATANG CAPAIAN PERSENTASE MASING-MASING STORE & ANALISA TARGET 10%-15% - BARU -->
+        <div class="bg-white rounded-3xl shadow-xl border border-slate-200 p-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6 pb-4 border-b border-slate-100">
+                <div>
+                    <h3 class="font-extrabold text-2xl text-slate-950 flex items-center gap-3">
+                        <i class="fa-solid fa-chart-column text-red-600"></i> Diagram Batang Capaian Persentase per Store (Target 10% - 15%)
+                    </h3>
+                    <p class="text-sm text-slate-600 mt-1 font-medium">Visualisasi perbandingan pencapaian kontribusi menu baru terhadap target standar manajemen (10% - 15%).</p>
+                </div>
+                <div class="flex items-center gap-3 text-xs font-bold">
+                    <span class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded bg-amber-500 inline-block"></span> Di Bawah 10%</span>
+                    <span class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded bg-emerald-600 inline-block"></span> Target Tercapai (10%-15%)</span>
+                    <span class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded bg-blue-600 inline-block"></span> Di Atas 15% (Excellent)</span>
+                </div>
+            </div>
+
+            <!-- Container Diagram Batang per Store -->
+            <div id="storeBarChartContainer" class="space-y-4 mb-8">
+                <!-- Diisi via JS -->
+            </div>
+
+            <!-- Analisis Kesimpulan Target 10% - 15% -->
+            <div class="bg-slate-950 text-slate-100 p-8 rounded-3xl border-4 border-amber-400/80 shadow-lg">
+                <h4 class="font-black text-xl uppercase tracking-wider text-amber-400 mb-4 flex items-center gap-3">
+                    <i class="fa-solid fa-square-poll-vertical"></i> Analisis & Kesimpulan Pencapaian Target Area (10% - 15%)
+                </h4>
+                <div id="targetAnalysisConclusion" class="text-sm text-slate-300 leading-relaxed space-y-3 font-medium">
+                    <!-- Diisi via JS -->
+                </div>
             </div>
         </div>
 
@@ -591,7 +617,6 @@
             const tbody = document.getElementById('rekapTableBody');
             let savedRecords = JSON.parse(localStorage.getItem(storageKey)) || [];
 
-            // Urutkan berdasarkan tanggal
             savedRecords.sort((a, b) => a.tanggalNum - b.tanggalNum);
 
             if(savedRecords.length === 0) {
@@ -624,7 +649,6 @@
             renderPeriodeAnalysis(savedRecords);
         }
 
-        // Render Analisis Shift Jam Sibuk (13.00, 16.00, 20.00)
         function renderShiftAnalysis(records) {
             let sum13 = 0, sum16 = 0, sum20 = 0;
             records.forEach(r => {
@@ -669,7 +693,6 @@
                 `Berdasarkan data kumulatif store ini, jam keramaian (peak hours) tertinggi terjadi pada <strong>${peakTime}</strong>. Gunakan acuan ini untuk penjadwalan kesiapan stok bahan baku saus dan penambahan tenaga kerja shift terkait.`;
         }
 
-        // Render Analisis Kumulatif Per Periode (1-7, 8-14, 15-21, 22-Akhir)
         function renderPeriodeAnalysis(records) {
             let periods = [
                 { title: "Periode 1 (Tgl 1-7)", start: 1, end: 7, omzet: 0, porsi: 0, count: 0 },
@@ -735,6 +758,8 @@
             let grandTotalNetSales = 0;
             let totalInputsAll = 0;
 
+            let storeStats = [];
+
             storeList.forEach((stName, idx) => {
                 let storageKey = `rekap_sai_${stName.replace(/\s+/g, '_')}_${bulan.replace(/\s+/g, '_')}`;
                 let storeRecords = JSON.parse(localStorage.getItem(storageKey)) || [];
@@ -750,7 +775,9 @@
                 grandTotalNetSales += stTotalNetSales;
                 totalInputsAll += storeRecords.length;
 
-                let stKontribusi = stTotalNetSales > 0 ? ((stTotalMenuBaru / stTotalNetSales) * 100).toFixed(2) : 0;
+                let stKontribusi = stTotalNetSales > 0 ? parseFloat(((stTotalMenuBaru / stTotalNetSales) * 100).toFixed(2)) : 0;
+
+                storeStats.push({ name: stName, kontribusi: stKontribusi, omzetBaru: stTotalMenuBaru, totalNetSales: stTotalNetSales });
 
                 let tr = document.createElement('tr');
                 tr.className = "hover:bg-slate-800/80 transition border-b border-slate-800/60";
@@ -771,6 +798,73 @@
             document.getElementById('globalTotalNetSalesRp').textContent = `Rp ${grandTotalNetSales.toLocaleString('id-ID')}`;
             document.getElementById('globalTotalKontribusi').textContent = `${grandKontribusi}%`;
             document.getElementById('globalTotalNetSales').textContent = `Rp ${grandTotalNetSales.toLocaleString('id-ID')}`;
+
+            // Render Diagram Batang & Analisis Target 10% - 15% per Store di Bawah
+            renderStoreBarChartAndAnalysis(storeStats, grandKontribusi);
+        }
+
+        // Render Diagram Batang & Analisis Target 10% - 15%
+        function renderStoreBarChartAndAnalysis(storeStats, grandKontribusi) {
+            let chartHtml = '';
+            let mencapaiTargetCount = 0;
+            let dibawahTargetCount = 0;
+            let diatasTargetCount = 0;
+
+            storeStats.forEach(st => {
+                let barColor = "bg-emerald-600";
+                let badgeText = "Tercapai (10% - 15%)";
+                let badgeClass = "bg-emerald-100 text-emerald-800";
+
+                if (st.kontribusi < 10) {
+                    barColor = "bg-amber-500";
+                    badgeText = "Di Bawah Target (< 10%)";
+                    badgeClass = "bg-amber-100 text-amber-800";
+                    dibawahTargetCount++;
+                } else if (st.kontribusi > 15) {
+                    barColor = "bg-blue-600";
+                    badgeText = "Sangat Baik (> 15%)";
+                    badgeClass = "bg-blue-100 text-blue-800";
+                    diatasTargetCount++;
+                } else {
+                    mencapaiTargetCount++;
+                }
+
+                // Skala lebar batang maksimum 30% untuk visualisasi proporsional
+                let widthPercent = Math.min(Math.max(st.kontribusi * 3.33, 3), 100);
+
+                chartHtml += `
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-2 mb-2">
+                            <span class="font-extrabold text-slate-900 text-sm">${st.name}</span>
+                            <div class="flex items-center gap-3">
+                                <span class="text-xs px-2.5 py-0.5 rounded-full font-bold ${badgeClass}">${badgeText}</span>
+                                <span class="font-black text-slate-950 text-sm">${st.kontribusi}%</span>
+                            </div>
+                        </div>
+                        <div class="w-full bg-slate-200 rounded-full h-4 overflow-hidden relative">
+                            <!-- Garis Indikator Target 10% dan 15% -->
+                            <div class="absolute top-0 bottom-0 left-[33.3%] w-0.5 bg-red-500 z-10" title="Target Minimal 10%"></div>
+                            <div class="absolute top-0 bottom-0 left-[50%] w-0.5 bg-red-500 z-10" title="Target Maksimal 15%"></div>
+                            
+                            <div class="${barColor} h-4 rounded-full transition-all duration-500" style="width: ${widthPercent}%"></div>
+                        </div>
+                        <div class="flex justify-between items-center mt-1 text-[11px] text-slate-500 font-semibold">
+                            <span>Omzet Menu Baru: Rp ${st.omzetBaru.toLocaleString('id-ID')}</span>
+                            <span class="text-red-600 font-bold">Target Range: 10% - 15%</span>
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('storeBarChartContainer').innerHTML = chartHtml;
+
+            // Analisis & Kesimpulan Target
+            let analysisHtml = `
+                <p>&bull; <strong>Performa Area Secara Keseluruhan:</strong> Secara kumulatif gabungan seluruh store di area ini mencapai tingkat kontribusi menu baru sebesar <strong class="text-amber-400">${grandKontribusi}%</strong>.</p>
+                <p>&bull; <strong>Evaluasi Pencapaian Target (10% - 15%):</strong> Terdapat <strong class="text-emerald-400">${mencapaiTargetCount} store</strong> yang berhasil berada tepat di rentang target ideal manajemen (10% - 15%), <strong class="text-blue-400">${diatasTargetCount} store</strong> yang melampaui target (> 15%), dan <strong class="text-amber-400">${dibawahTargetCount} store</strong> yang masih memerlukan akselerasi promosi menu baru.</p>
+                <p>&bull; <strong>Rekomendasi Tindak Lanjut:</strong> Store dengan kontribusi di bawah 10% disarankan untuk memperkuat edukasi produk oleh kasir pada jam sibuk serta evaluasi display menu baru. Sementara store di atas 15% dapat dijadikan *benchmark* (contoh praktik terbaik) dalam hal teknik *upselling* menu baru kepada pelanggan.</p>
+            `;
+            document.getElementById('targetAnalysisConclusion').innerHTML = analysisHtml;
         }
 
         function resetForm() {
