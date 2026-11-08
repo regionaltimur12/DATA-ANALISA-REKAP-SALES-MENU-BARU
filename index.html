@@ -387,8 +387,8 @@
             { category: "4. PAKET MENU BARU", name: "PAKET 3 - GARLIC SAUCE", price: 24000, sausType: "Garlic" }
         ];
 
-        // URL Google Apps Script Anda
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz2SG5UPpKu9rqcpJ3sJh1DgCXkjATbMdo4tcAHACbkAG26db9OdRL_IOcrS_vpnCVr/exec";
+        // URL Google Apps Script terbaru Anda yang baru diperbarui
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyp0o1gLiEYIv11Yx1Tv37eDg0zv7N3agSZPbV0cJymlQHAbyuyiZVL6XyR0CWAdeff/exec";
 
         function initTanggal() {
             const select = document.getElementById('inputTanggal');
@@ -964,7 +964,7 @@
             initTanggal();
             renderTable();
             
-            // Sinkronisasi otomatis saat pertama kali dibuka
+            // Sinkronisasi otomatis saat halaman dimuat
             sinkronisasiDariGoogleSheets(false);
 
             muatDataStoreAktif();
