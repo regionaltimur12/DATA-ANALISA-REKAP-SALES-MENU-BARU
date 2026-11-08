@@ -35,28 +35,34 @@
                 </div>
             </div>
 
-            <div class="bg-red-900/40 backdrop-blur-sm px-6 py-5 rounded-2xl border border-red-700 shadow-xl flex flex-col gap-3 min-w-[300px] text-red-50">
-                <div class="flex justify-between items-center gap-3">
-                    <span class="text-xs font-semibold tracking-tight">PILIH STORE:</span>
-                    <select id="selectStore" onchange="gantiStoreAtauBulan()" class="bg-white text-slate-950 text-sm px-3 py-1.5 rounded-lg border border-slate-300 font-bold focus:ring-2 focus:ring-amber-400 focus:outline-none w-44 truncate">
-                        <option value="AGS Megantoro Nganjuk">1. AGS Megantoro Nganjuk</option>
-                        <option value="AGS Caruban">2. AGS Caruban</option>
-                        <option value="AGS Babat Tanggul">3. AGS Babat Tanggul</option>
-                        <option value="AGS Sunan Drajat">4. AGS Sunan Drajat</option>
-                        <option value="AGS Blitar Patok">5. AGS Blitar Patok</option>
-                        <option value="AGS Wates Kediri">6. AGS Wates Kediri</option>
-                        <option value="AGS Sragen A Yani">7. AGS Sragen A Yani</option>
-                    </select>
+            <div class="flex flex-col gap-3">
+                <div class="bg-red-900/40 backdrop-blur-sm px-6 py-5 rounded-2xl border border-red-700 shadow-xl flex flex-col gap-3 min-w-[300px] text-red-50">
+                    <div class="flex justify-between items-center gap-3">
+                        <span class="text-xs font-semibold tracking-tight">PILIH STORE:</span>
+                        <select id="selectStore" onchange="gantiStoreAtauBulan()" class="bg-white text-slate-950 text-sm px-3 py-1.5 rounded-lg border border-slate-300 font-bold focus:ring-2 focus:ring-amber-400 focus:outline-none w-44 truncate">
+                            <option value="AGS Megantoro Nganjuk">1. AGS Megantoro Nganjuk</option>
+                            <option value="AGS Caruban">2. AGS Caruban</option>
+                            <option value="AGS Babat Tanggul">3. AGS Babat Tanggul</option>
+                            <option value="AGS Sunan Drajat">4. AGS Sunan Drajat</option>
+                            <option value="AGS Blitar Patok">5. AGS Blitar Patok</option>
+                            <option value="AGS Wates Kediri">6. AGS Wates Kediri</option>
+                            <option value="AGS Sragen A Yani">7. AGS Sragen A Yani</option>
+                        </select>
+                    </div>
+                    <div class="flex justify-between items-center gap-3">
+                        <span class="text-xs font-semibold tracking-tight">PILIH BULAN:</span>
+                        <select id="selectBulan" onchange="gantiStoreAtauBulan()" class="bg-white text-slate-950 text-sm px-3 py-1.5 rounded-lg border border-slate-300 font-bold focus:ring-2 focus:ring-amber-400 focus:outline-none w-44">
+                            <option value="November 2026">November 2026</option>
+                            <option value="Desember 2026">Desember 2026</option>
+                            <option value="Januari 2027">Januari 2027</option>
+                            <option value="Februari 2027">Februari 2027</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="flex justify-between items-center gap-3">
-                    <span class="text-xs font-semibold tracking-tight">PILIH BULAN:</span>
-                    <select id="selectBulan" onchange="gantiStoreAtauBulan()" class="bg-white text-slate-950 text-sm px-3 py-1.5 rounded-lg border border-slate-300 font-bold focus:ring-2 focus:ring-amber-400 focus:outline-none w-44">
-                        <option value="November 2026">November 2026</option>
-                        <option value="Desember 2026">Desember 2026</option>
-                        <option value="Januari 2027">Januari 2027</option>
-                        <option value="Februari 2027">Februari 2027</option>
-                    </select>
-                </div>
+                <!-- TOMBOL REFRESH DATA -->
+                <button onclick="sinkronisasiDariGoogleSheets(true)" id="btnRefresh" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-xs px-4 py-3 rounded-xl shadow-md transition flex items-center justify-center gap-2 cursor-pointer">
+                    <i id="refreshIcon" class="fa-solid fa-rotate-right"></i> Refresh Data Masuk
+                </button>
             </div>
         </div>
     </header>
@@ -176,7 +182,7 @@
             </div>
         </div>
 
-        <!-- ANALISIS KUMULATIF 3 JENIS SAUS -->
+        <!-- ANALISIS KOMULATIF 3 JENIS SAUS -->
         <div class="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mb-10">
             <h3 class="font-extrabold text-2xl text-slate-950 flex items-center gap-3 mb-3">
                 <i class="fa-solid fa-chart-pie text-red-600"></i> Analisis Performa Kumulatif 3 Jenis Saus Utama
@@ -381,7 +387,7 @@
             { category: "4. PAKET MENU BARU", name: "PAKET 3 - GARLIC SAUCE", price: 24000, sausType: "Garlic" }
         ];
 
-        // URL Google Apps Script terbaru yang terhubung dengan Google Sheets
+        // URL Google Apps Script Anda
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz2SG5UPpKu9rqcpJ3sJh1DgCXkjATbMdo4tcAHACbkAG26db9OdRL_IOcrS_vpnCVr/exec";
 
         function initTanggal() {
@@ -614,10 +620,13 @@
             }
         }
 
-        // Sinkronisasi otomatis data dari Google Sheets saat halaman dimuat
-        function sinkronisasiDariGoogleSheets() {
+        // FUNGSI SINKRONISASI & REFRESH DATA DARI GOOGLE SHEETS
+        function sinkronisasiDariGoogleSheets(isManual = false) {
             if (!WEB_APP_URL) return;
             
+            let refreshIcon = document.getElementById('refreshIcon');
+            if (refreshIcon) refreshIcon.classList.add('fa-spin');
+
             fetch(WEB_APP_URL)
                 .then(response => response.json())
                 .then(data => {
@@ -640,11 +649,22 @@
 
                         muatDataStoreAktif();
                         renderGlobalSummary();
-                        console.log("Sinkronisasi data dari Google Sheets berhasil.");
+
+                        if (isManual) {
+                            alert("Data berhasil diperbarui (di-refresh) dari Google Sheets!");
+                        }
+                    } else if (isManual) {
+                        alert("Sinkronisasi selesai. Belum ada data baru di Google Sheets.");
                     }
                 })
                 .catch(err => {
-                    console.log("Menggunakan data cache lokal:", err);
+                    console.log("Gagal sinkronisasi online:", err);
+                    if (isManual) {
+                        alert("Gagal terhubung ke Google Sheets. Menggunakan data cache lokal.");
+                    }
+                })
+                .finally(() => {
+                    if (refreshIcon) refreshIcon.classList.remove('fa-spin');
                 });
         }
 
@@ -944,8 +964,8 @@
             initTanggal();
             renderTable();
             
-            // Sinkronisasi data dari Google Sheets saat aplikasi pertama kali dibuka
-            sinkronisasiDariGoogleSheets();
+            // Sinkronisasi otomatis saat pertama kali dibuka
+            sinkronisasiDariGoogleSheets(false);
 
             muatDataStoreAktif();
             renderGlobalSummary();
