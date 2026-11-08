@@ -176,7 +176,7 @@
             </div>
         </div>
 
-        <!-- ANALISIS KOMULATIF 3 JENIS SAUS -->
+        <!-- ANALISIS KUMULATIF 3 JENIS SAUS -->
         <div class="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mb-10">
             <h3 class="font-extrabold text-2xl text-slate-950 flex items-center gap-3 mb-3">
                 <i class="fa-solid fa-chart-pie text-red-600"></i> Analisis Performa Kumulatif 3 Jenis Saus Utama
@@ -381,7 +381,8 @@
             { category: "4. PAKET MENU BARU", name: "PAKET 3 - GARLIC SAUCE", price: 24000, sausType: "Garlic" }
         ];
 
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx9hLOdxcqShNug3P33eyjz8pkPNHAGHSiQmA9sitZhFqA6MVczOcKBmU6zfL0vEGFc/exec";
+        // URL Google Apps Script terbaru yang terhubung dengan Google Sheets
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz2SG5UPpKu9rqcpJ3sJh1DgCXkjATbMdo4tcAHACbkAG26db9OdRL_IOcrS_vpnCVr/exec";
 
         function initTanggal() {
             const select = document.getElementById('inputTanggal');
@@ -613,7 +614,7 @@
             }
         }
 
-        // FUNGSI BARU: Tarik data dari Google Sheets untuk sinkronisasi otomatis antar perangkat/user
+        // Sinkronisasi otomatis data dari Google Sheets saat halaman dimuat
         function sinkronisasiDariGoogleSheets() {
             if (!WEB_APP_URL) return;
             
@@ -621,13 +622,11 @@
                 .then(response => response.json())
                 .then(data => {
                     if (Array.isArray(data) && data.length > 0) {
-                        // Kelompokkan data dari Google Sheets berdasarkan Store & Bulan ke LocalStorage
                         let groupedData = {};
                         data.forEach(row => {
                             if (row.store && row.bulan) {
                                 let key = `rekap_sai_${row.store.replace(/\s+/g, '_')}_${row.bulan.replace(/\s+/g, '_')}`;
                                 if (!groupedData[key]) groupedData[key] = [];
-                                // Hindari duplikasi ID/Tanggal yang sama
                                 let existing = groupedData[key].find(item => item.tanggalNum === row.tanggalNum);
                                 if (!existing) {
                                     groupedData[key].push(row);
@@ -635,19 +634,17 @@
                             }
                         });
 
-                        // Timpa atau gabungkan ke localStorage
                         Object.keys(groupedData).forEach(key => {
                             localStorage.setItem(key, JSON.stringify(groupedData[key]));
                         });
 
-                        // Refresh tampilan
                         muatDataStoreAktif();
                         renderGlobalSummary();
                         console.log("Sinkronisasi data dari Google Sheets berhasil.");
                     }
                 })
                 .catch(err => {
-                    console.log("Menggunakan data cache lokal (Mode offline / CORS check):", err);
+                    console.log("Menggunakan data cache lokal:", err);
                 });
         }
 
@@ -947,7 +944,7 @@
             initTanggal();
             renderTable();
             
-            // Tarik data terbaru dari Google Sheets saat aplikasi pertama kali dibuka/di-refresh
+            // Sinkronisasi data dari Google Sheets saat aplikasi pertama kali dibuka
             sinkronisasiDariGoogleSheets();
 
             muatDataStoreAktif();
