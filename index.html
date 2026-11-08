@@ -225,7 +225,7 @@
             </div>
         </div>
 
-        <!-- ANALISIS KUMULATIF PER PERIODE BULANAN (1 s.d. 4) - DIPERBARUI DENGAN TOTAL RP, 3 SAUS, & PERSENTASE KERAIAN -->
+        <!-- ANALISIS KUMULATIF PER PERIODE BULANAN (1 s.d. 4) -->
         <div class="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mb-10">
             <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6 pb-4 border-b border-slate-100">
                 <div>
@@ -613,6 +613,44 @@
             }
         }
 
+        // FUNGSI BARU: Tarik data dari Google Sheets untuk sinkronisasi otomatis antar perangkat/user
+        function sinkronisasiDariGoogleSheets() {
+            if (!WEB_APP_URL) return;
+            
+            fetch(WEB_APP_URL)
+                .then(response => response.json())
+                .then(data => {
+                    if (Array.isArray(data) && data.length > 0) {
+                        // Kelompokkan data dari Google Sheets berdasarkan Store & Bulan ke LocalStorage
+                        let groupedData = {};
+                        data.forEach(row => {
+                            if (row.store && row.bulan) {
+                                let key = `rekap_sai_${row.store.replace(/\s+/g, '_')}_${row.bulan.replace(/\s+/g, '_')}`;
+                                if (!groupedData[key]) groupedData[key] = [];
+                                // Hindari duplikasi ID/Tanggal yang sama
+                                let existing = groupedData[key].find(item => item.tanggalNum === row.tanggalNum);
+                                if (!existing) {
+                                    groupedData[key].push(row);
+                                }
+                            }
+                        });
+
+                        // Timpa atau gabungkan ke localStorage
+                        Object.keys(groupedData).forEach(key => {
+                            localStorage.setItem(key, JSON.stringify(groupedData[key]));
+                        });
+
+                        // Refresh tampilan
+                        muatDataStoreAktif();
+                        renderGlobalSummary();
+                        console.log("Sinkronisasi data dari Google Sheets berhasil.");
+                    }
+                })
+                .catch(err => {
+                    console.log("Menggunakan data cache lokal (Mode offline / CORS check):", err);
+                });
+        }
+
         function muatDataStoreAktif() {
             const store = document.getElementById('selectStore').value;
             const bulan = document.getElementById('selectBulan').value;
@@ -696,7 +734,6 @@
                 `Berdasarkan data kumulatif store ini, jam keramaian (peak hours) tertinggi terjadi pada <strong>${peakTime}</strong>. Gunakan acuan ini untuk penjadwalan kesiapan stok bahan baku saus dan penambahan tenaga kerja shift terkait.`;
         }
 
-        // Render Analisis Kumulatif Per Periode (DIPERBARUI: Ada Total Rp, 3 Saus, & Persentase Keramaian Jam)
         function renderPeriodeAnalysis(records) {
             let periods = [
                 { title: "Periode 1 (Tgl 1-7)", start: 1, end: 7, omzet: 0, netSales: 0, porsi: 0, count: 0, saus: { "Hot Chili": 0, "Butter": 0, "Garlic": 0 }, jam: { 13: 0, 16: 0, 20: 0 } },
@@ -735,7 +772,6 @@
                     <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 flex flex-col justify-between">
                         <div>
                             <span class="text-[10px] font-extrabold uppercase bg-amber-100 text-amber-800 px-2.5 py-1 rounded-full">${p.title}</span>
-                            <!-- Total Rupiah Omzet Periode -->
                             <h4 class="text-xl font-extrabold text-slate-900 mt-3">Rp ${p.omzet.toLocaleString('id-ID')}</h4>
                             <p class="text-xs text-blue-700 font-bold mt-0.5">Net Sales Store: Rp ${p.netSales.toLocaleString('id-ID')}</p>
                             
@@ -743,7 +779,6 @@
                                 <p>Total Porsi: <strong class="text-slate-800">${p.porsi} PCS</strong> (${p.count} Hari Input)</p>
                             </div>
 
-                            <!-- Capaian 3 Jenis Saus di Periode Tersebut -->
                             <div class="mt-3 bg-white p-3 rounded-xl border border-slate-200 text-xs space-y-1">
                                 <p class="font-extrabold text-slate-700 mb-1">Capaian Saus:</p>
                                 <div class="flex justify-between text-slate-600"><span>&bull; Hot Chili:</span> <strong class="text-slate-900">Rp ${p.saus["Hot Chili"].toLocaleString('id-ID')}</strong></div>
@@ -752,7 +787,6 @@
                             </div>
                         </div>
 
-                        <!-- Persentase Keramaian di 3 Waktu Shift -->
                         <div class="mt-4 pt-3 border-t border-slate-200">
                             <p class="text-[11px] font-extrabold text-slate-600 mb-1.5 uppercase tracking-wider">Persentase Keramaian Shift:</p>
                             <div class="grid grid-cols-3 gap-1 text-center text-[10px] font-bold">
@@ -912,6 +946,10 @@
         window.onload = function() {
             initTanggal();
             renderTable();
+            
+            // Tarik data terbaru dari Google Sheets saat aplikasi pertama kali dibuka/di-refresh
+            sinkronisasiDariGoogleSheets();
+
             muatDataStoreAktif();
             renderGlobalSummary();
         };
