@@ -31,7 +31,7 @@
                 <div>
                     <span class="inline-block bg-amber-500 text-red-950 text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-widest shadow-sm">Professional Area Management</span>
                     <h1 class="text-3xl md:text-4xl font-extrabold mt-1.5 tracking-tight text-white drop-shadow-md">AYAM GEPREK SA'I</h1>
-                    <p class="text-red-100 text-sm mt-1 max-w-md font-medium">Sistem Rekapitulasi & Analisis Target Kontribusi 10%-15% Multi-Store</p>
+                    <p class="text-red-100 text-sm mt-1 max-w-md font-medium">Sistem Rekapitulasi & Analisis Komprehensif Per Periode & Shift</p>
                 </div>
             </div>
 
@@ -225,14 +225,14 @@
             </div>
         </div>
 
-        <!-- ANALISIS KUMULATIF PER PERIODE BULANAN (1 s.d. 4) -->
+        <!-- ANALISIS KUMULATIF PER PERIODE BULANAN (1 s.d. 4) - DIPERBARUI DENGAN TOTAL RP, 3 SAUS, & PERSENTASE KERAIAN -->
         <div class="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mb-10">
             <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6 pb-4 border-b border-slate-100">
                 <div>
                     <h3 class="font-extrabold text-2xl text-slate-950 flex items-center gap-3">
                         <i class="fa-solid fa-calendar-days text-amber-600"></i> Analisis Kumulatif Per Periode Bulanan
                     </h3>
-                    <p class="text-sm text-slate-600 mt-1 font-medium">Pecahan rekapitulasi performa bulanan menjadi 4 Periode strategis.</p>
+                    <p class="text-sm text-slate-600 mt-1 font-medium">Pecahan rekapitulasi performa bulanan menjadi 4 Periode lengkap dengan omzet, jenis saus, dan keramaian shift.</p>
                 </div>
                 <span class="bg-amber-100 text-amber-800 text-xs font-extrabold px-4 py-2 rounded-xl">Area: <span id="lblStorePeriodeText">AGS Megantoro Nganjuk</span></span>
             </div>
@@ -310,7 +310,7 @@
             </div>
         </div>
 
-        <!-- DIAGRAM BATANG CAPAIAN PERSENTASE MASING-MASING STORE & ANALISA TARGET 10%-15% - BARU -->
+        <!-- DIAGRAM BATANG CAPAIAN PERSENTASE MASING-MASING STORE & ANALISA TARGET 10%-15% -->
         <div class="bg-white rounded-3xl shadow-xl border border-slate-200 p-8">
             <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6 pb-4 border-b border-slate-100">
                 <div>
@@ -327,18 +327,14 @@
             </div>
 
             <!-- Container Diagram Batang per Store -->
-            <div id="storeBarChartContainer" class="space-y-4 mb-8">
-                <!-- Diisi via JS -->
-            </div>
+            <div id="storeBarChartContainer" class="space-y-4 mb-8"></div>
 
             <!-- Analisis Kesimpulan Target 10% - 15% -->
             <div class="bg-slate-950 text-slate-100 p-8 rounded-3xl border-4 border-amber-400/80 shadow-lg">
                 <h4 class="font-black text-xl uppercase tracking-wider text-amber-400 mb-4 flex items-center gap-3">
                     <i class="fa-solid fa-square-poll-vertical"></i> Analisis & Kesimpulan Pencapaian Target Area (10% - 15%)
                 </h4>
-                <div id="targetAnalysisConclusion" class="text-sm text-slate-300 leading-relaxed space-y-3 font-medium">
-                    <!-- Diisi via JS -->
-                </div>
+                <div id="targetAnalysisConclusion" class="text-sm text-slate-300 leading-relaxed space-y-3 font-medium"></div>
             </div>
         </div>
 
@@ -549,6 +545,8 @@
             let totalJam16 = 0;
             let totalJam20 = 0;
 
+            let sausHarian = { "Hot Chili": 0, "Butter": 0, "Garlic": 0 };
+
             menuList.forEach((item, index) => {
                 let q13 = parseInt(document.querySelector(`input[data-index="${index}"][data-time="13"]`).value) || 0;
                 let q16 = parseInt(document.querySelector(`input[data-index="${index}"][data-time="16"]`).value) || 0;
@@ -560,6 +558,10 @@
                 totalJam13 += (q13 * item.price);
                 totalJam16 += (q16 * item.price);
                 totalJam20 += (q20 * item.price);
+
+                if (sausHarian[item.sausType] !== undefined) {
+                    sausHarian[item.sausType] += sumRp;
+                }
 
                 if(sumPcs > 0) {
                     detailPenjualan.push({ name: item.name, q13, q16, q20, sumPcs, sumRp });
@@ -586,6 +588,7 @@
                 jam13: totalJam13,
                 jam16: totalJam16,
                 jam20: totalJam20,
+                saus: sausHarian,
                 kontribusi: ((totalRp / netSalesTotal) * 100).toFixed(2),
                 detail: detailPenjualan
             };
@@ -666,17 +669,17 @@
                 <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
                     <p class="text-xs font-bold text-slate-400 uppercase">Jam 13.00 (Shift Siang)</p>
                     <h4 class="text-2xl font-extrabold text-slate-900 mt-1">Rp ${sum13.toLocaleString('id-ID')}</h4>
-                    <p class="text-xs font-bold text-blue-600 mt-2">Kontribusi: ${p13}%</p>
+                    <p class="text-xs font-bold text-blue-600 mt-2">Keramaian: ${p13}%</p>
                 </div>
                 <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
                     <p class="text-xs font-bold text-slate-400 uppercase">Jam 16.00 (Shift Sore)</p>
                     <h4 class="text-2xl font-extrabold text-slate-900 mt-1">Rp ${sum16.toLocaleString('id-ID')}</h4>
-                    <p class="text-xs font-bold text-blue-600 mt-2">Kontribusi: ${p16}%</p>
+                    <p class="text-xs font-bold text-blue-600 mt-2">Keramaian: ${p16}%</p>
                 </div>
                 <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
                     <p class="text-xs font-bold text-slate-400 uppercase">Jam 20.00 (Shift Malam)</p>
                     <h4 class="text-2xl font-extrabold text-slate-900 mt-1">Rp ${sum20.toLocaleString('id-ID')}</h4>
-                    <p class="text-xs font-bold text-blue-600 mt-2">Kontribusi: ${p20}%</p>
+                    <p class="text-xs font-bold text-blue-600 mt-2">Keramaian: ${p20}%</p>
                 </div>
             `;
 
@@ -693,12 +696,13 @@
                 `Berdasarkan data kumulatif store ini, jam keramaian (peak hours) tertinggi terjadi pada <strong>${peakTime}</strong>. Gunakan acuan ini untuk penjadwalan kesiapan stok bahan baku saus dan penambahan tenaga kerja shift terkait.`;
         }
 
+        // Render Analisis Kumulatif Per Periode (DIPERBARUI: Ada Total Rp, 3 Saus, & Persentase Keramaian Jam)
         function renderPeriodeAnalysis(records) {
             let periods = [
-                { title: "Periode 1 (Tgl 1-7)", start: 1, end: 7, omzet: 0, porsi: 0, count: 0 },
-                { title: "Periode 2 (Tgl 8-14)", start: 8, end: 14, omzet: 0, porsi: 0, count: 0 },
-                { title: "Periode 3 (Tgl 15-21)", start: 15, end: 21, omzet: 0, porsi: 0, count: 0 },
-                { title: "Periode 4 (Tgl 22-Akhir)", start: 22, end: 31, omzet: 0, porsi: 0, count: 0 }
+                { title: "Periode 1 (Tgl 1-7)", start: 1, end: 7, omzet: 0, netSales: 0, porsi: 0, count: 0, saus: { "Hot Chili": 0, "Butter": 0, "Garlic": 0 }, jam: { 13: 0, 16: 0, 20: 0 } },
+                { title: "Periode 2 (Tgl 8-14)", start: 8, end: 14, omzet: 0, netSales: 0, porsi: 0, count: 0, saus: { "Hot Chili": 0, "Butter": 0, "Garlic": 0 }, jam: { 13: 0, 16: 0, 20: 0 } },
+                { title: "Periode 3 (Tgl 15-21)", start: 15, end: 21, omzet: 0, netSales: 0, porsi: 0, count: 0, saus: { "Hot Chili": 0, "Butter": 0, "Garlic": 0 }, jam: { 13: 0, 16: 0, 20: 0 } },
+                { title: "Periode 4 (Tgl 22-Akhir)", start: 22, end: 31, omzet: 0, netSales: 0, porsi: 0, count: 0, saus: { "Hot Chili": 0, "Butter": 0, "Garlic": 0 }, jam: { 13: 0, 16: 0, 20: 0 } }
             ];
 
             records.forEach(r => {
@@ -706,20 +710,56 @@
                 let p = periods.find(x => t >= x.start && t <= x.end);
                 if (p) {
                     p.omzet += r.totalRp;
+                    p.netSales += r.netSalesTotal;
                     p.porsi += r.totalPcs;
                     p.count++;
+                    if (r.saus) {
+                        p.saus["Hot Chili"] += (r.saus["Hot Chili"] || 0);
+                        p.saus["Butter"] += (r.saus["Butter"] || 0);
+                        p.saus["Garlic"] += (r.saus["Garlic"] || 0);
+                    }
+                    p.jam[13] += (r.jam13 || 0);
+                    p.jam[16] += (r.jam16 || 0);
+                    p.jam[20] += (r.jam20 || 0);
                 }
             });
 
             let periodeHtml = '';
             periods.forEach(p => {
+                let totalJamP = p.jam[13] + p.jam[16] + p.jam[20];
+                let p13 = totalJamP > 0 ? ((p.jam[13] / totalJamP) * 100).toFixed(0) : 0;
+                let p16 = totalJamP > 0 ? ((p.jam[16] / totalJamP) * 100).toFixed(0) : 0;
+                let p20 = totalJamP > 0 ? ((p.jam[20] / totalJamP) * 100).toFixed(0) : 0;
+
                 periodeHtml += `
-                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
-                        <span class="text-[10px] font-extrabold uppercase bg-amber-100 text-amber-800 px-2.5 py-1 rounded-full">${p.title}</span>
-                        <h4 class="text-xl font-extrabold text-slate-900 mt-3">Rp ${p.omzet.toLocaleString('id-ID')}</h4>
-                        <div class="mt-3 text-xs text-slate-500 font-semibold space-y-1">
-                            <p>Total Porsi: <strong class="text-slate-800">${p.porsi} PCS</strong></p>
-                            <p>Hari Input: <strong class="text-slate-800">${p.count} Hari</strong></p>
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 flex flex-col justify-between">
+                        <div>
+                            <span class="text-[10px] font-extrabold uppercase bg-amber-100 text-amber-800 px-2.5 py-1 rounded-full">${p.title}</span>
+                            <!-- Total Rupiah Omzet Periode -->
+                            <h4 class="text-xl font-extrabold text-slate-900 mt-3">Rp ${p.omzet.toLocaleString('id-ID')}</h4>
+                            <p class="text-xs text-blue-700 font-bold mt-0.5">Net Sales Store: Rp ${p.netSales.toLocaleString('id-ID')}</p>
+                            
+                            <div class="mt-3 text-xs text-slate-500 font-semibold space-y-1 border-t border-slate-200 pt-3">
+                                <p>Total Porsi: <strong class="text-slate-800">${p.porsi} PCS</strong> (${p.count} Hari Input)</p>
+                            </div>
+
+                            <!-- Capaian 3 Jenis Saus di Periode Tersebut -->
+                            <div class="mt-3 bg-white p-3 rounded-xl border border-slate-200 text-xs space-y-1">
+                                <p class="font-extrabold text-slate-700 mb-1">Capaian Saus:</p>
+                                <div class="flex justify-between text-slate-600"><span>&bull; Hot Chili:</span> <strong class="text-slate-900">Rp ${p.saus["Hot Chili"].toLocaleString('id-ID')}</strong></div>
+                                <div class="flex justify-between text-slate-600"><span>&bull; Butter:</span> <strong class="text-slate-900">Rp ${p.saus["Butter"].toLocaleString('id-ID')}</strong></div>
+                                <div class="flex justify-between text-slate-600"><span>&bull; Garlic:</span> <strong class="text-slate-900">Rp ${p.saus["Garlic"].toLocaleString('id-ID')}</strong></div>
+                            </div>
+                        </div>
+
+                        <!-- Persentase Keramaian di 3 Waktu Shift -->
+                        <div class="mt-4 pt-3 border-t border-slate-200">
+                            <p class="text-[11px] font-extrabold text-slate-600 mb-1.5 uppercase tracking-wider">Persentase Keramaian Shift:</p>
+                            <div class="grid grid-cols-3 gap-1 text-center text-[10px] font-bold">
+                                <div class="bg-blue-50 text-blue-800 p-1 rounded">13:00<br><span class="text-xs font-black">${p13}%</span></div>
+                                <div class="bg-blue-50 text-blue-800 p-1 rounded">16:00<br><span class="text-xs font-black">${p16}%</span></div>
+                                <div class="bg-blue-50 text-blue-800 p-1 rounded">20:00<br><span class="text-xs font-black">${p20}%</span></div>
+                            </div>
                         </div>
                     </div>
                 `;
@@ -799,11 +839,9 @@
             document.getElementById('globalTotalKontribusi').textContent = `${grandKontribusi}%`;
             document.getElementById('globalTotalNetSales').textContent = `Rp ${grandTotalNetSales.toLocaleString('id-ID')}`;
 
-            // Render Diagram Batang & Analisis Target 10% - 15% per Store di Bawah
             renderStoreBarChartAndAnalysis(storeStats, grandKontribusi);
         }
 
-        // Render Diagram Batang & Analisis Target 10% - 15%
         function renderStoreBarChartAndAnalysis(storeStats, grandKontribusi) {
             let chartHtml = '';
             let mencapaiTargetCount = 0;
@@ -829,7 +867,6 @@
                     mencapaiTargetCount++;
                 }
 
-                // Skala lebar batang maksimum 30% untuk visualisasi proporsional
                 let widthPercent = Math.min(Math.max(st.kontribusi * 3.33, 3), 100);
 
                 chartHtml += `
@@ -842,7 +879,6 @@
                             </div>
                         </div>
                         <div class="w-full bg-slate-200 rounded-full h-4 overflow-hidden relative">
-                            <!-- Garis Indikator Target 10% dan 15% -->
                             <div class="absolute top-0 bottom-0 left-[33.3%] w-0.5 bg-red-500 z-10" title="Target Minimal 10%"></div>
                             <div class="absolute top-0 bottom-0 left-[50%] w-0.5 bg-red-500 z-10" title="Target Maksimal 15%"></div>
                             
@@ -858,7 +894,6 @@
 
             document.getElementById('storeBarChartContainer').innerHTML = chartHtml;
 
-            // Analisis & Kesimpulan Target
             let analysisHtml = `
                 <p>&bull; <strong>Performa Area Secara Keseluruhan:</strong> Secara kumulatif gabungan seluruh store di area ini mencapai tingkat kontribusi menu baru sebesar <strong class="text-amber-400">${grandKontribusi}%</strong>.</p>
                 <p>&bull; <strong>Evaluasi Pencapaian Target (10% - 15%):</strong> Terdapat <strong class="text-emerald-400">${mencapaiTargetCount} store</strong> yang berhasil berada tepat di rentang target ideal manajemen (10% - 15%), <strong class="text-blue-400">${diatasTargetCount} store</strong> yang melampaui target (> 15%), dan <strong class="text-amber-400">${dibawahTargetCount} store</strong> yang masih memerlukan akselerasi promosi menu baru.</p>
