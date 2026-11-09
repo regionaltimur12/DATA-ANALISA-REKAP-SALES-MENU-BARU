@@ -285,9 +285,19 @@
                     </h3>
                     <p class="text-sm text-slate-400 mt-1.5 font-medium">Akumulasi performa dari seluruh store area untuk bulan <span id="lblBulanGlobal" class="text-amber-400 font-bold">November 2026</span></p>
                 </div>
-                <div class="bg-slate-800/60 backdrop-blur-sm px-6 py-4 rounded-2xl border border-slate-700 text-center shadow-inner">
-                    <p class="text-xs text-slate-400 font-bold tracking-wider uppercase">Total Omzet Gabungan 7 Store</p>
-                    <h4 id="globalTotalNetSales" class="text-2xl md:text-3xl font-black text-emerald-400 mt-1.5">Rp 0</h4>
+                <div class="flex flex-wrap items-center gap-3">
+                    <!-- Tombol Refresh Konsolidasi -->
+                    <button onclick="sinkronisasiDariGoogleSheets(true)" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-xs px-4 py-3 rounded-xl shadow-md transition flex items-center gap-2 cursor-pointer">
+                        <i class="fa-solid fa-rotate-right"></i> Refresh Data
+                    </button>
+                    <!-- Tombol Download Laporan Konsolidasi & Analisis -->
+                    <button onclick="downloadLaporanKonsolidasi()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs px-4 py-3 rounded-xl shadow-md transition flex items-center gap-2 cursor-pointer">
+                        <i class="fa-solid fa-download"></i> Download Laporan & Analisis
+                    </button>
+                    <div class="bg-slate-800/60 backdrop-blur-sm px-6 py-3 rounded-2xl border border-slate-700 text-center shadow-inner">
+                        <p class="text-[10px] text-slate-400 font-bold tracking-wider uppercase">Total Omzet Gabungan</p>
+                        <h4 id="globalTotalNetSales" class="text-xl md:text-2xl font-black text-emerald-400 mt-0.5">Rp 0</h4>
+                    </div>
                 </div>
             </div>
 
@@ -387,7 +397,7 @@
             { category: "4. PAKET MENU BARU", name: "PAKET 3 - GARLIC SAUCE", price: 24000, sausType: "Garlic" }
         ];
 
-        // URL Web App Google Apps Script terbaru Anda
+        // URL Web App Google Apps Script Anda
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwTmPQxIpEisuxKWk6d7seY9TX1OdctPhiaPkh-4jTUY6LjQirkmW5URkx6lmKqaAQy/exec";
 
         function initTanggal() {
@@ -602,11 +612,13 @@
 
             let storageKey = `rekap_sai_${store.replace(/\s+/g, '_')}_${bulan.replace(/\s+/g, '_')}`;
             let savedRecords = JSON.parse(localStorage.getItem(storageKey)) || [];
+            
             savedRecords = savedRecords.filter(item => item.tanggalNum !== tanggal);
             savedRecords.push(dataRecord);
+            
             localStorage.setItem(storageKey, JSON.stringify(savedRecords));
 
-            alert(`Data ${store} (Tanggal ${tanggal} ${bulan}) berhasil disimpan!`);
+            alert(`Data ${store} (Tanggal ${tanggal} ${bulan}) berhasil disimpan dan diperbarui!`);
             muatDataStoreAktif();
             renderGlobalSummary();
 
@@ -620,7 +632,6 @@
             }
         }
 
-        // FUNGSI SINKRONISASI & REFRESH DATA DARI GOOGLE SHEETS
         function sinkronisasiDariGoogleSheets(isManual = false) {
             if (!WEB_APP_URL) return;
             
@@ -636,8 +647,10 @@
                             if (row.store && row.bulan) {
                                 let key = `rekap_sai_${row.store.replace(/\s+/g, '_')}_${row.bulan.replace(/\s+/g, '_')}`;
                                 if (!groupedData[key]) groupedData[key] = [];
-                                let existing = groupedData[key].find(item => item.tanggalNum === row.tanggalNum);
-                                if (!existing) {
+                                let existingIndex = groupedData[key].findIndex(item => item.tanggalNum === row.tanggalNum);
+                                if (existingIndex >= 0) {
+                                    groupedData[key][existingIndex] = row;
+                                } else {
                                     groupedData[key].push(row);
                                 }
                             }
@@ -651,7 +664,7 @@
                         renderGlobalSummary();
 
                         if (isManual) {
-                            alert("Data berhasil diperbarui (di-refresh) dari Google Sheets!");
+                            alert("Data rekapitulasi & konsolidasi berhasil diperbarui dari Google Sheets!");
                         }
                     } else if (isManual) {
                         alert("Sinkronisasi selesai. Belum ada data baru di Google Sheets.");
@@ -840,6 +853,8 @@
             }
         }
 
+        let globalExportDataCache = { storeStats: [], grandKontribusi: 0, grandTotalMenuBaru: 0, grandTotalNetSales: 0 };
+
         function renderGlobalSummary() {
             const bulan = document.getElementById('selectBulan').value;
             const globalTbody = document.getElementById('globalSummaryTableBody');
@@ -848,7 +863,6 @@
             let grandTotalMenuBaru = 0;
             let grandTotalNetSales = 0;
             let totalInputsAll = 0;
-
             let storeStats = [];
 
             storeList.forEach((stName, idx) => {
@@ -868,7 +882,7 @@
 
                 let stKontribusi = stTotalNetSales > 0 ? parseFloat(((stTotalMenuBaru / stTotalNetSales) * 100).toFixed(2)) : 0;
 
-                storeStats.push({ name: stName, kontribusi: stKontribusi, omzetBaru: stTotalMenuBaru, totalNetSales: stTotalNetSales });
+                storeStats.push({ name: stName, kontribusi: stKontribusi, omzetBaru: stTotalMenuBaru, totalNetSales: stTotalNetSales, days: storeRecords.length });
 
                 let tr = document.createElement('tr');
                 tr.className = "hover:bg-slate-800/80 transition border-b border-slate-800/60";
@@ -884,6 +898,8 @@
             });
 
             let grandKontribusi = grandTotalNetSales > 0 ? ((grandTotalMenuBaru / grandTotalNetSales) * 100).toFixed(2) : 0;
+
+            globalExportDataCache = { storeStats, grandKontribusi, grandTotalMenuBaru, grandTotalNetSales, bulan };
 
             document.getElementById('globalTotalMenuBaruRp').textContent = `Rp ${grandTotalMenuBaru.toLocaleString('id-ID')}`;
             document.getElementById('globalTotalNetSalesRp').textContent = `Rp ${grandTotalNetSales.toLocaleString('id-ID')}`;
@@ -953,6 +969,51 @@
             document.getElementById('targetAnalysisConclusion').innerHTML = analysisHtml;
         }
 
+        // FUNGSI EKSPOR / DOWNLOAD LAPORAN KONSOLIDASI & ANALISIS
+        function downloadLaporanKonsolidasi() {
+            let data = globalExportDataCache;
+            let bulanName = data.bulan || "Periode";
+            
+            let textReport = `========================================================================\n`;
+            textReport += `          LAPORAN KONSOLIDASI & ANALISIS AREA AYAM GEPREK SA'I\n`;
+            textReport += `          Bulan: ${bulanName}\n`;
+            textReport += `========================================================================\n\n`;
+            
+            textReport += `1. RINGKASAN KONSOLIDASI 7 STORE:\n`;
+            textReport += `------------------------------------------------------------------------\n`;
+            data.storeStats.forEach((st, idx) => {
+                textReport += `${idx + 1}. ${st.name}\n`;
+                textReport += `   - Hari Input Aktif : ${st.days} Hari\n`;
+                textReport += `   - Omzet Menu Baru  : Rp ${st.omzetBaru.toLocaleString('id-ID')}\n`;
+                textReport += `   - Total Net Sales  : Rp ${st.totalNetSales.toLocaleString('id-ID')}\n`;
+                textReport += `   - % Kontribusi     : ${st.kontribusi}%\n\n`;
+            });
+            
+            textReport += `------------------------------------------------------------------------\n`;
+            textReport += `TOTAL KONSOLIDASI KESELURUHAN (7 STORE):\n`;
+            textReport += `- Total Omzet Menu Baru : Rp ${data.grandTotalMenuBaru.toLocaleString('id-ID')}\n`;
+            textReport += `- Total Net Sales Store : Rp ${data.grandTotalNetSales.toLocaleString('id-ID')}\n`;
+            textReport += `- Total % Kontribusi    : ${data.grandKontribusi}%\n`;
+            textReport += `========================================================================\n\n`;
+            
+            textReport += `2. ANALISIS & KESIMPULAN TARGET MANAJEMEN (10% - 15%):\n`;
+            textReport += `------------------------------------------------------------------------\n`;
+            textReport += `- Secara kumulatif gabungan seluruh store di area mencapai tingkat kontribusi sebesar ${data.grandKontribusi}%.\n`;
+            textReport += `- Rekomendasi Area Manager: Perkuat edukasi produk pada store dengan kontribusi di bawah 10% dan jadikan store dengan kontribusi di atas 15% sebagai benchmark (praktik terbaik).\n\n`;
+            textReport += `Dicetak otomatis oleh Sistem Area Management Ayam Geprek Sa'i\n`;
+            textReport += `========================================================================\n`;
+
+            let blob = new Blob([textReport], { type: 'text/plain;charset=utf-8' });
+            let url = URL.createObjectURL(blob);
+            let a = document.createElement('a');
+            a.href = url;
+            a.download = `Laporan_Konsolidasi_Ayam_Geprek_Sai_${bulanName.replace(/\s+/g, '_')}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
         function resetForm() {
             document.querySelectorAll('.qty-input').forEach(input => input.value = 0);
             document.getElementById('inputKasir').value = '';
@@ -964,7 +1025,6 @@
             initTanggal();
             renderTable();
             
-            // Sinkronisasi otomatis saat halaman dimuat
             sinkronisasiDariGoogleSheets(false);
 
             muatDataStoreAktif();
