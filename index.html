@@ -6,6 +6,8 @@
     <title>Aplikasi Input & Rekap Penjualan Menu Baru - Ayam Geprek Sa'i</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Google Fonts: Plus Jakarta Sans -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- FontAwesome untuk Ikon -->
@@ -21,25 +23,25 @@
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between">
 
-    <!-- HEADER / KOP SURAT PROFESSIONAL -->
-    <header class="relative text-white shadow-lg py-8 px-4 md:px-8 header-gradient overflow-hidden border-b-4 border-red-900">
+    <!-- HEADER / KOP SURAT PROFESSIONAL RESPONSIF -->
+    <header class="relative text-white shadow-lg py-6 sm:py-8 px-4 sm:px-8 header-gradient overflow-hidden border-b-4 border-red-900">
         <div class="absolute inset-0 opacity-10 mix-blend-luminosity" style="background-image: url('Gambar menu baru.jpeg'); background-size: cover; background-position: center;"></div>
 
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 relative z-10">
-            <div class="flex flex-col md:flex-row items-center gap-4 text-center md:text-left">
-                <img src="logo sa'i.png" alt="Logo Ayam Geprek Sa'i" class="h-24 w-auto object-contain logo-header transform hover:scale-105 transition-transform duration-300">
+        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-center gap-6 relative z-10">
+            <div class="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
+                <img src="logo sa'i.png" alt="Logo Ayam Geprek Sa'i" class="h-20 sm:h-24 w-auto object-contain logo-header transform hover:scale-105 transition-transform duration-300">
                 <div>
                     <span class="inline-block bg-amber-500 text-red-950 text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-widest shadow-sm">Professional Area Management</span>
-                    <h1 class="text-3xl md:text-4xl font-extrabold mt-1.5 tracking-tight text-white drop-shadow-md">AYAM GEPREK SA'I</h1>
-                    <p class="text-red-100 text-sm mt-1 max-w-md font-medium">Sistem Rekapitulasi & Analisis Komprehensif Per Periode & Shift</p>
+                    <h1 class="text-2xl sm:text-4xl font-extrabold mt-1.5 tracking-tight text-white drop-shadow-md">AYAM GEPREK SA'I</h1>
+                    <p class="text-red-100 text-xs sm:text-sm mt-1 max-w-md font-medium">Sistem Rekapitulasi & Analisis Komprehensif Per Periode & Shift</p>
                 </div>
             </div>
 
-            <div class="flex flex-col gap-3">
-                <div class="bg-red-900/40 backdrop-blur-sm px-6 py-5 rounded-2xl border border-red-700 shadow-xl flex flex-col gap-3 min-w-[300px] text-red-50">
+            <div class="flex flex-col sm:flex-row lg:flex-col gap-3 w-full sm:w-auto">
+                <div class="bg-red-900/40 backdrop-blur-sm px-4 sm:px-6 py-4 rounded-2xl border border-red-700 shadow-xl flex flex-col gap-3 w-full sm:min-w-[300px] text-red-50">
                     <div class="flex justify-between items-center gap-3">
                         <span class="text-xs font-semibold tracking-tight">PILIH STORE:</span>
-                        <select id="selectStore" onchange="gantiStoreAtauBulan()" class="bg-white text-slate-950 text-sm px-3 py-1.5 rounded-lg border border-slate-300 font-bold focus:ring-2 focus:ring-amber-400 focus:outline-none w-44 truncate">
+                        <select id="selectStore" onchange="gantiStoreAtauBulan()" class="bg-white text-slate-950 text-xs sm:text-sm px-3 py-1.5 rounded-lg border border-slate-300 font-bold focus:ring-2 focus:ring-amber-400 focus:outline-none w-40 sm:w-44 truncate">
                             <option value="AGS Megantoro Nganjuk">1. AGS Megantoro Nganjuk</option>
                             <option value="AGS Caruban">2. AGS Caruban</option>
                             <option value="AGS Babat Tanggul">3. AGS Babat Tanggul</option>
@@ -51,7 +53,7 @@
                     </div>
                     <div class="flex justify-between items-center gap-3">
                         <span class="text-xs font-semibold tracking-tight">PILIH BULAN:</span>
-                        <select id="selectBulan" onchange="gantiStoreAtauBulan()" class="bg-white text-slate-950 text-sm px-3 py-1.5 rounded-lg border border-slate-300 font-bold focus:ring-2 focus:ring-amber-400 focus:outline-none w-44">
+                        <select id="selectBulan" onchange="gantiStoreAtauBulan()" class="bg-white text-slate-950 text-xs sm:text-sm px-3 py-1.5 rounded-lg border border-slate-300 font-bold focus:ring-2 focus:ring-amber-400 focus:outline-none w-40 sm:w-44">
                             <option value="November 2026">November 2026</option>
                             <option value="Desember 2026">Desember 2026</option>
                             <option value="Januari 2027">Januari 2027</option>
@@ -60,51 +62,51 @@
                     </div>
                 </div>
                 <!-- TOMBOL REFRESH DATA -->
-                <button onclick="sinkronisasiDariGoogleSheets(true)" id="btnRefresh" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-xs px-4 py-3 rounded-xl shadow-md transition flex items-center justify-center gap-2 cursor-pointer">
+                <button onclick="sinkronisasiDariGoogleSheets(true)" id="btnRefresh" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-xs px-4 py-3 rounded-xl shadow-md transition flex items-center justify-center gap-2 cursor-pointer w-full">
                     <i id="refreshIcon" class="fa-solid fa-rotate-right"></i> Refresh Data Masuk
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- KONTROL UTAMA & FORM INPUT -->
-    <main class="max-w-7xl mx-auto w-full p-4 md:p-8 flex-grow">
+    <!-- KONTROL UTAMA & FORM INPUT RESPONSIF -->
+    <main class="max-w-7xl mx-auto w-full p-3 sm:p-6 lg:p-8 flex-grow">
         
         <!-- Bar Kartu Ringkasan Store Aktif -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex items-center justify-between">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
+            <div class="bg-white p-5 sm:p-6 rounded-3xl shadow-sm border border-slate-100 flex items-center justify-between">
                 <div>
                     <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Porsi Menu Baru</p>
-                    <h3 id="statTotalPcs" class="text-4xl font-extrabold text-slate-900 mt-1.5 tracking-tight">0</h3>
+                    <h3 id="statTotalPcs" class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-1.5 tracking-tight">0</h3>
                 </div>
-                <div class="w-16 h-16 bg-red-50 text-red-600 rounded-2xl flex items-center justify-center text-3xl font-black border border-red-100">
+                <div class="w-14 h-14 sm:w-16 sm:h-16 bg-red-50 text-red-600 rounded-2xl flex items-center justify-center text-2xl sm:text-3xl font-black border border-red-100">
                     <i class="fa-solid fa-utensils"></i>
                 </div>
             </div>
-            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex items-center justify-between">
+            <div class="bg-white p-5 sm:p-6 rounded-3xl shadow-sm border border-slate-100 flex items-center justify-between">
                 <div>
                     <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Omzet Menu Baru (Rp)</p>
-                    <h3 id="statTotalRp" class="text-2xl md:text-3xl font-extrabold text-emerald-700 mt-1.5 tracking-tight">Rp 0</h3>
+                    <h3 id="statTotalRp" class="text-xl sm:text-2xl lg:text-3xl font-extrabold text-emerald-700 mt-1.5 tracking-tight">Rp 0</h3>
                 </div>
-                <div class="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-3xl font-black border border-emerald-100">
+                <div class="w-14 h-14 sm:w-16 sm:h-16 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl sm:text-3xl font-black border border-emerald-100">
                     <i class="fa-solid fa-rupiah-sign"></i>
                 </div>
             </div>
-            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex items-center justify-between">
+            <div class="bg-white p-5 sm:p-6 rounded-3xl shadow-sm border border-slate-100 flex items-center justify-between">
                 <div>
                     <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Net Sales Store</p>
-                    <h3 id="statTotalNetSales" class="text-2xl md:text-3xl font-extrabold text-slate-950 mt-1.5 tracking-tight">Rp 0</h3>
+                    <h3 id="statTotalNetSales" class="text-xl sm:text-2xl lg:text-3xl font-extrabold text-slate-950 mt-1.5 tracking-tight">Rp 0</h3>
                 </div>
-                <div class="w-16 h-16 bg-slate-100 text-slate-600 rounded-2xl flex items-center justify-center text-3xl font-black border border-slate-200">
+                <div class="w-14 h-14 sm:w-16 sm:h-16 bg-slate-100 text-slate-600 rounded-2xl flex items-center justify-center text-2xl sm:text-3xl font-black border border-slate-200">
                     <i class="fa-solid fa-chart-line"></i>
                 </div>
             </div>
-            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex items-center justify-between">
+            <div class="bg-white p-5 sm:p-6 rounded-3xl shadow-sm border border-slate-100 flex items-center justify-between">
                 <div>
                     <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">% Kontribusi Menu Baru</p>
-                    <h3 id="statPersentaseKontribusi" class="text-4xl font-extrabold text-amber-600 mt-1.5 tracking-tight">0.00%</h3>
+                    <h3 id="statPersentaseKontribusi" class="text-3xl sm:text-4xl font-extrabold text-amber-600 mt-1.5 tracking-tight">0.00%</h3>
                 </div>
-                <div class="w-16 h-16 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center text-3xl font-black border border-amber-100">
+                <div class="w-14 h-14 sm:w-16 sm:h-16 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center text-2xl sm:text-3xl font-black border border-amber-100">
                     <i class="fa-solid fa-percent"></i>
                 </div>
             </div>
@@ -112,70 +114,70 @@
 
         <!-- FORM INPUT HARIAN -->
         <div class="bg-white rounded-3xl shadow-lg border border-slate-100 overflow-hidden mb-10">
-            <div class="bg-slate-950 text-white px-8 py-6 flex flex-col md:flex-row justify-between items-center gap-4 border-b-4 border-amber-500">
-                <h2 class="font-extrabold text-2xl flex items-center gap-3 text-white">
+            <div class="bg-slate-950 text-white px-6 sm:px-8 py-6 flex flex-col lg:flex-row justify-between items-center gap-4 border-b-4 border-amber-500">
+                <h2 class="font-extrabold text-xl sm:text-2xl flex items-center gap-3 text-white text-center lg:text-left">
                     <i class="fa-solid fa-edit text-amber-400"></i> Input Rekap Harian (Acuan Jam 13.00, 16.00, 20.00)
                 </h2>
-                <div class="flex flex-wrap items-center gap-4 w-full md:w-auto bg-slate-800 p-3 rounded-2xl border border-slate-700">
+                <div class="flex flex-wrap justify-center sm:justify-start items-center gap-4 w-full lg:w-auto bg-slate-800 p-3 rounded-2xl border border-slate-700">
                     <div>
                         <label class="text-xs text-slate-300 font-semibold block mb-1">Tanggal:</label>
-                        <select id="inputTanggal" class="bg-slate-900 text-white px-4 py-2 rounded-xl border border-slate-700 text-sm font-bold focus:outline-none"></select>
+                        <select id="inputTanggal" class="bg-slate-900 text-white px-3 sm:px-4 py-2 rounded-xl border border-slate-700 text-sm font-bold focus:outline-none"></select>
                     </div>
                     <div>
                         <label class="text-xs text-slate-300 font-semibold block mb-1">Nama Kasir/PIC:</label>
-                        <input type="text" id="inputKasir" placeholder="Contoh: Andi" class="bg-slate-900 text-white px-4 py-2 rounded-xl border border-slate-700 text-sm w-40 focus:outline-none font-medium">
+                        <input type="text" id="inputKasir" placeholder="Contoh: Andi" class="bg-slate-900 text-white px-3 sm:px-4 py-2 rounded-xl border border-slate-700 text-sm w-36 sm:w-40 focus:outline-none font-medium">
                     </div>
                 </div>
             </div>
 
             <!-- PANEL INPUT TOTAL NET SALES KESELURUHAN -->
-            <div class="bg-red-50 border-b border-red-100 px-8 py-5 flex flex-col md:flex-row justify-between items-center gap-4">
-                <div class="flex items-center gap-4">
-                    <div class="w-14 h-14 bg-red-600 text-white rounded-2xl flex items-center justify-center text-2xl font-black border-4 border-white shadow-md">
+            <div class="bg-red-50 border-b border-red-100 px-6 sm:px-8 py-5 flex flex-col lg:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-4 text-center sm:text-left">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 bg-red-600 text-white rounded-2xl flex items-center justify-center text-xl sm:text-2xl font-black border-4 border-white shadow-md shrink-0">
                         <i class="fa-solid fa-cash-register"></i>
                     </div>
                     <div>
-                        <h4 class="font-extrabold text-slate-950 text-lg">Total Net Sales Keseluruhan Store (Hari Ini)</h4>
-                        <p class="text-sm text-slate-600 font-medium">Masukkan total omzet aktual store dari seluruh produk (Lama + Baru) hari ini.</p>
+                        <h4 class="font-extrabold text-slate-950 text-base sm:text-lg">Total Net Sales Keseluruhan Store (Hari Ini)</h4>
+                        <p class="text-xs sm:text-sm text-slate-600 font-medium">Masukkan total omzet aktual store dari seluruh produk (Lama + Baru) hari ini.</p>
                     </div>
                 </div>
-                <div class="flex items-center gap-3 w-full md:w-auto bg-white p-3 rounded-2xl border border-red-100 shadow-inner">
-                    <span class="text-lg font-black text-red-700">Rp</span>
-                    <input type="number" id="inputNetSalesTotal" placeholder="Ex: 5200000" class="w-full md:w-56 bg-transparent border-none px-2 py-2 text-2xl font-black text-slate-950 focus:outline-none text-right">
+                <div class="flex items-center gap-3 w-full lg:w-auto bg-white p-3 rounded-2xl border border-red-100 shadow-inner justify-between sm:justify-end">
+                    <span class="text-base sm:text-lg font-black text-red-700">Rp</span>
+                    <input type="number" id="inputNetSalesTotal" placeholder="Ex: 5200000" class="w-full sm:w-56 bg-transparent border-none px-2 py-1 text-xl sm:text-2xl font-black text-slate-950 focus:outline-none text-right">
                 </div>
             </div>
 
-            <!-- TABEL INPUT MENU BARU -->
+            <!-- TABEL INPUT MENU BARU RESPONSIF -->
             <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
+                <table class="w-full text-left border-collapse min-w-[750px]">
                     <thead class="bg-slate-100 text-slate-600 text-xs font-bold uppercase tracking-wider border-b border-slate-200">
                         <tr>
-                            <th class="py-4 px-6 text-center w-16">No</th>
-                            <th class="py-4 px-6">Nama Menu / Produk Baru</th>
-                            <th class="py-4 px-6 text-right">Harga Satuan (Rp)</th>
-                            <th class="py-4 px-6 text-center w-24">Jam 13.00</th>
-                            <th class="py-4 px-6 text-center w-24">Jam 16.00</th>
-                            <th class="py-4 px-6 text-center w-24">Jam 20.00</th>
-                            <th class="py-4 px-6 text-center w-24">Total PCS</th>
-                            <th class="py-4 px-6 text-right">Total Omzet (Rp)</th>
+                            <th class="py-4 px-4 sm:px-6 text-center w-12 sm:w-16">No</th>
+                            <th class="py-4 px-4 sm:px-6">Nama Menu / Produk Baru</th>
+                            <th class="py-4 px-4 sm:px-6 text-right">Harga Satuan (Rp)</th>
+                            <th class="py-4 px-4 sm:px-6 text-center w-20 sm:w-24">Jam 13.00</th>
+                            <th class="py-4 px-4 sm:px-6 text-center w-20 sm:w-24">Jam 16.00</th>
+                            <th class="py-4 px-4 sm:px-6 text-center w-20 sm:w-24">Jam 20.00</th>
+                            <th class="py-4 px-4 sm:px-6 text-center w-20 sm:w-24">Total PCS</th>
+                            <th class="py-4 px-4 sm:px-6 text-right">Total Omzet (Rp)</th>
                         </tr>
                     </thead>
                     <tbody id="menuTableBody" class="divide-y divide-slate-100 text-sm font-medium text-slate-800"></tbody>
                     <tfoot class="bg-slate-50 border-t-2 border-slate-200 font-extrabold text-slate-900">
                         <tr>
-                            <td colspan="6" class="py-4 px-6 text-right uppercase tracking-wider text-sm">Subtotal Menu Baru:</td>
-                            <td class="py-4 px-6 text-center text-lg" id="tableTotalPcsFooter">0</td>
-                            <td class="py-4 px-6 text-right text-lg text-emerald-700" id="tableTotalRpFooter">Rp 0</td>
+                            <td colspan="6" class="py-4 px-4 sm:px-6 text-right uppercase tracking-wider text-xs sm:text-sm">Subtotal Menu Baru:</td>
+                            <td class="py-4 px-4 sm:px-6 text-center text-base sm:text-lg" id="tableTotalPcsFooter">0</td>
+                            <td class="py-4 px-4 sm:px-6 text-right text-base sm:text-lg text-emerald-700" id="tableTotalRpFooter">Rp 0</td>
                         </tr>
                     </tfoot>
                 </table>
             </div>
 
-            <div class="p-6 bg-white border-t border-slate-100 flex flex-wrap justify-between items-center gap-4">
-                <p class="text-xs text-slate-500 font-medium"><i class="fa-solid fa-info-circle text-red-500 mr-1"></i> Data tersimpan otomatis secara lokal dan tersinkron ke Google Sheets.</p>
-                <div class="flex gap-3 w-full md:w-auto">
-                    <button type="button" onclick="resetForm()" class="flex-1 md:flex-none px-6 py-3.5 rounded-2xl border-2 border-slate-300 font-bold text-slate-600 hover:bg-slate-100 transition">Reset</button>
-                    <button type="button" onclick="simpanData()" class="flex-1 md:flex-none px-8 py-3.5 rounded-2xl bg-red-950 text-white font-extrabold hover:bg-red-800 shadow-md transition flex items-center justify-center gap-2">
+            <div class="p-6 bg-white border-t border-slate-100 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <p class="text-xs text-slate-500 font-medium text-center sm:text-left"><i class="fa-solid fa-info-circle text-red-500 mr-1"></i> Data tersimpan otomatis secara lokal dan tersinkron ke Google Sheets.</p>
+                <div class="flex gap-3 w-full sm:w-auto">
+                    <button type="button" onclick="resetForm()" class="flex-1 sm:flex-none px-6 py-3.5 rounded-2xl border-2 border-slate-300 font-bold text-slate-600 hover:bg-slate-100 transition text-xs sm:text-sm">Reset</button>
+                    <button type="button" onclick="simpanData()" class="flex-1 sm:flex-none px-8 py-3.5 rounded-2xl bg-red-950 text-white font-extrabold hover:bg-red-800 shadow-md transition flex items-center justify-center gap-2 text-xs sm:text-sm">
                         <i class="fa-solid fa-floppy-disk"></i> Simpan Data Hari Ini
                     </button>
                 </div>
@@ -183,89 +185,100 @@
         </div>
 
         <!-- ANALISIS KOMULATIF 3 JENIS SAUS -->
-        <div class="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mb-10">
-            <h3 class="font-extrabold text-2xl text-slate-950 flex items-center gap-3 mb-3">
+        <div class="bg-white rounded-3xl shadow-sm border border-slate-100 p-6 sm:p-8 mb-10">
+            <h3 class="font-extrabold text-xl sm:text-2xl text-slate-950 flex items-center gap-3 mb-3">
                 <i class="fa-solid fa-chart-pie text-red-600"></i> Analisis Performa Kumulatif 3 Jenis Saus Utama
             </h3>
-            <p class="text-sm text-slate-600 mb-8 font-medium">Akumulasi omzet berdasarkan varian Hot Chili, Butter, dan Garlic Sauce.</p>
+            <p class="text-xs sm:text-sm text-slate-600 mb-8 font-medium">Akumulasi omzet berdasarkan varian Hot Chili, Butter, dan Garlic Sauce.</p>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center mb-10 bg-slate-50/50 p-6 rounded-3xl border border-slate-100">
-                <div id="kumulatifBarContainer" class="space-y-5"></div>
-                <div class="flex flex-col items-center justify-center p-8 border-l-2 border-dashed border-slate-200">
-                    <h4 class="font-bold text-sm text-slate-600 mb-6 uppercase tracking-wider">Share Omzet Saus</h4>
-                    <div class="relative w-52 h-52 flex items-center justify-center drop-shadow-lg">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-center mb-10 bg-slate-50/50 p-4 sm:p-6 rounded-3xl border border-slate-100">
+                <div id="kumulatifBarContainer" class="space-y-4 sm:space-y-5"></div>
+                <div class="flex flex-col items-center justify-center p-4 sm:p-8 border-t lg:border-t-0 lg:border-l-2 border-dashed border-slate-200">
+                    <h4 class="font-bold text-xs sm:text-sm text-slate-600 mb-6 uppercase tracking-wider">Share Omzet Saus</h4>
+                    <div class="relative w-48 h-48 sm:w-52 sm:h-52 flex items-center justify-center drop-shadow-lg">
                         <svg id="donutChart" class="w-full h-full transform -rotate-90" viewBox="0 0 100 100"></svg>
                         <div class="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
-                            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">TOTAL MENU</span>
-                            <span id="donutTotalOmzet" class="text-xl font-black text-slate-950 leading-tight">Rp 0</span>
+                            <span class="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-wider">TOTAL MENU</span>
+                            <span id="donutTotalOmzet" class="text-lg sm:text-xl font-black text-slate-950 leading-tight">Rp 0</span>
                         </div>
                     </div>
-                    <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 mt-8 text-sm font-bold text-slate-700">
-                        <div class="flex items-center gap-2"><span class="w-4 h-4 rounded-full bg-red-600 inline-block"></span> Hot Chili</div>
-                        <div class="flex items-center gap-2"><span class="w-4 h-4 rounded-full bg-amber-500 inline-block"></span> Butter</div>
-                        <div class="flex items-center gap-2"><span class="w-4 h-4 rounded-full bg-emerald-600 inline-block"></span> Garlic</div>
+                    <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 mt-8 text-xs sm:text-sm font-bold text-slate-700">
+                        <div class="flex items-center gap-2"><span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-red-600 inline-block"></span> Hot Chili</div>
+                        <div class="flex items-center gap-2"><span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-amber-500 inline-block"></span> Butter</div>
+                        <div class="flex items-center gap-2"><span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-emerald-600 inline-block"></span> Garlic</div>
                     </div>
                 </div>
             </div>
 
-            <div class="bg-slate-950 text-slate-100 p-8 rounded-3xl border-4 border-amber-400/80">
-                <h4 class="font-black text-xl uppercase tracking-wider text-amber-400 mb-4 flex items-center gap-3">
+            <div class="bg-slate-950 text-slate-100 p-6 sm:p-8 rounded-3xl border-4 border-amber-400/80">
+                <h4 class="font-black text-lg sm:text-xl uppercase tracking-wider text-amber-400 mb-4 flex items-center gap-3">
                     <i class="fa-solid fa-lightbulb"></i> Keterangan & Preferensi Konsumen
                 </h4>
-                <div id="analisisDayaBeliText" class="text-sm text-slate-300 leading-relaxed space-y-2 font-medium"></div>
+                <div id="analisisDayaBeliText" class="text-xs sm:text-sm text-slate-300 leading-relaxed space-y-2 font-medium"></div>
             </div>
         </div>
 
-        <!-- ANALISIS SHIFT JAM SIBUK (13.00, 16.00, 20.00) -->
-        <div class="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mb-10">
-            <h3 class="font-extrabold text-2xl text-slate-950 flex items-center gap-3 mb-2">
-                <i class="fa-solid fa-clock text-blue-600"></i> Analisis Performa & Persentase Shift Jam Sibuk (Peak Hours)
+        <!-- GRAFIK TREN PENJUALAN HARIAN PER STORE (CHART.JS) -->
+        <div class="bg-white rounded-3xl shadow-sm border border-slate-100 p-6 sm:p-8 mb-10">
+            <h3 class="font-extrabold text-xl sm:text-2xl text-slate-950 flex items-center gap-3 mb-2">
+                <i class="fa-solid fa-chart-line text-emerald-600"></i> Grafik Tren Omzet Harian Menu Baru (<span id="lblChartStore">AGS Megantoro Nganjuk</span>)
             </h3>
-            <p class="text-sm text-slate-600 mb-8 font-medium">Acuan jam keramaian berdasarkan akumulasi transaksi pada jam 13.00, 16.00, dan 20.00.</p>
+            <p class="text-xs sm:text-sm text-slate-600 mb-6 font-medium">Visualisasi grafik garis fluktuasi omzet harian menu baru sepanjang bulan berjalan.</p>
+            <div class="relative w-full h-[320px] sm:h-[380px]">
+                <canvas id="dailyTrendChart"></canvas>
+            </div>
+        </div>
+
+        <!-- ANALISIS SHIFT JAM SIBUK (OTOMATIS REKAPITULASI SHIF HARIAN) -->
+        <div class="bg-white rounded-3xl shadow-sm border border-slate-100 p-6 sm:p-8 mb-10">
+            <h3 class="font-extrabold text-xl sm:text-2xl text-slate-950 flex items-center gap-3 mb-2">
+                <i class="fa-solid fa-clock text-blue-600"></i> Rekapitulasi Otomatis Performa Shift Harian (Peak Hours)
+            </h3>
+            <p class="text-xs sm:text-sm text-slate-600 mb-8 font-medium">Akumulasi otomatis transaksi store berdasarkan jam sibuk Shift Siang (13.00), Sore (16.00), dan Malam (20.00).</p>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8" id="shiftCardContainer"></div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-8" id="shiftCardContainer"></div>
             
-            <div class="bg-blue-50 border border-blue-200 text-blue-900 p-6 rounded-2xl">
-                <h4 class="font-extrabold text-base mb-2 flex items-center gap-2"><i class="fa-solid fa-info-circle"></i> Kesimpulan Acuan Shift & Penjadwalan:</h4>
+            <div class="bg-blue-50 border border-blue-200 text-blue-900 p-5 sm:p-6 rounded-2xl">
+                <h4 class="font-extrabold text-sm sm:text-base mb-2 flex items-center gap-2"><i class="fa-solid fa-info-circle"></i> Kesimpulan Acuan Shift & Penjadwalan:</h4>
                 <p id="shiftAnalysisSummary" class="text-xs leading-relaxed font-semibold">Belum ada data transaksi jam operasional yang masuk.</p>
             </div>
         </div>
 
         <!-- ANALISIS KUMULATIF PER PERIODE BULANAN (1 s.d. 4) -->
-        <div class="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mb-10">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6 pb-4 border-b border-slate-100">
+        <div class="bg-white rounded-3xl shadow-sm border border-slate-100 p-6 sm:p-8 mb-10">
+            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6 pb-4 border-b border-slate-100">
                 <div>
-                    <h3 class="font-extrabold text-2xl text-slate-950 flex items-center gap-3">
+                    <h3 class="font-extrabold text-xl sm:text-2xl text-slate-950 flex items-center gap-3">
                         <i class="fa-solid fa-calendar-days text-amber-600"></i> Analisis Kumulatif Per Periode Bulanan
                     </h3>
-                    <p class="text-sm text-slate-600 mt-1 font-medium">Pecahan rekapitulasi performa bulanan menjadi 4 Periode lengkap dengan omzet, jenis saus, dan keramaian shift.</p>
+                    <p class="text-xs sm:text-sm text-slate-600 mt-1 font-medium">Pecahan rekapitulasi performa bulanan menjadi 4 Periode lengkap dengan omzet, jenis saus, dan keramaian shift.</p>
                 </div>
                 <span class="bg-amber-100 text-amber-800 text-xs font-extrabold px-4 py-2 rounded-xl">Area: <span id="lblStorePeriodeText">AGS Megantoro Nganjuk</span></span>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8" id="periodeCardContainer"></div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8" id="periodeCardContainer"></div>
         </div>
 
         <!-- TABEL RIWAYAT STORE AKTIF -->
-        <div class="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mb-10">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6 pb-6 border-b border-slate-100">
-                <h3 class="font-extrabold text-2xl text-slate-950 flex items-center gap-3">
+        <div class="bg-white rounded-3xl shadow-sm border border-slate-100 p-6 sm:p-8 mb-10">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 pb-6 border-b border-slate-100">
+                <h3 class="font-extrabold text-xl sm:text-2xl text-slate-950 flex items-center gap-3">
                     <i class="fa-solid fa-history text-blue-600"></i> Riwayat Input Harian: <span id="lblStoreAktifText" class="text-red-700 font-black">AGS Megantoro Nganjuk</span>
                 </h3>
-                <button onclick="hapusDataStoreAktif()" class="text-xs text-red-600 hover:text-red-800 font-bold px-4 py-1.5 rounded-lg hover:bg-red-50 transition flex items-center gap-1.5">
+                <button onclick="hapusDataStoreAktif()" class="text-xs text-red-600 hover:text-red-800 font-bold px-4 py-1.5 rounded-lg hover:bg-red-50 transition flex items-center gap-1.5 self-start sm:self-auto">
                     <i class="fa-solid fa-trash-alt"></i> Hapus Riwayat Store
                 </button>
             </div>
             <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse text-sm font-medium text-slate-700">
+                <table class="w-full text-left border-collapse text-xs sm:text-sm font-medium text-slate-700 min-w-[650px]">
                     <thead>
                         <tr class="bg-slate-100 text-slate-600 text-xs font-bold uppercase tracking-wider border-b border-slate-200">
-                            <th class="py-4 px-6">Tanggal</th>
-                            <th class="py-4 px-6">Kasir / PIC</th>
-                            <th class="py-4 px-6 text-right">Omzet Menu Baru</th>
-                            <th class="py-4 px-6 text-right">Total Net Sales Store</th>
-                            <th class="py-4 px-6 text-center">% Kontribusi</th>
-                            <th class="py-4 px-6 text-center">Aksi</th>
+                            <th class="py-4 px-4 sm:px-6">Tanggal</th>
+                            <th class="py-4 px-4 sm:px-6">Kasir / PIC</th>
+                            <th class="py-4 px-4 sm:px-6 text-right">Omzet Menu Baru</th>
+                            <th class="py-4 px-4 sm:px-6 text-right">Total Net Sales Store</th>
+                            <th class="py-4 px-4 sm:px-6 text-center">% Kontribusi</th>
+                            <th class="py-4 px-4 sm:px-6 text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody id="rekapTableBody" class="divide-y divide-slate-100">
@@ -276,50 +289,50 @@
         </div>
 
         <!-- REKAPITULASI KESELURUHAN (KONSOLIDASI 7 STORE) -->
-        <div class="bg-gradient-to-br from-slate-950 to-slate-900 rounded-3xl shadow-2xl border border-slate-800 p-8 text-white mb-10">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8 border-b border-slate-700 pb-6">
+        <div class="bg-gradient-to-br from-slate-950 to-slate-900 rounded-3xl shadow-2xl border border-slate-800 p-6 sm:p-8 text-white mb-10">
+            <div class="flex flex-col xl:flex-row justify-between items-start xl:items-center gap-6 mb-8 border-b border-slate-700 pb-6">
                 <div>
                     <span class="inline-block bg-red-700 text-white text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-widest shadow-sm">Area Consolidated Report</span>
-                    <h3 class="font-extrabold text-2xl md:text-3xl mt-2 flex items-center gap-3 text-white">
+                    <h3 class="font-extrabold text-xl sm:text-3xl mt-2 flex items-center gap-3 text-white">
                         <i class="fa-solid fa-globe text-amber-400"></i> Rekapitulasi Konsolidasi Keseluruhan (7 Store)
                     </h3>
-                    <p class="text-sm text-slate-400 mt-1.5 font-medium">Akumulasi performa dari seluruh store area untuk bulan <span id="lblBulanGlobal" class="text-amber-400 font-bold">November 2026</span></p>
+                    <p class="text-xs sm:text-sm text-slate-400 mt-1.5 font-medium">Akumulasi performa dari seluruh store area untuk bulan <span id="lblBulanGlobal" class="text-amber-400 font-bold">November 2026</span></p>
                 </div>
-                <div class="flex flex-wrap items-center gap-3">
+                <div class="flex flex-wrap items-center gap-3 w-full xl:w-auto">
                     <!-- Tombol Refresh Konsolidasi -->
-                    <button onclick="sinkronisasiDariGoogleSheets(true)" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-xs px-4 py-3 rounded-xl shadow-md transition flex items-center gap-2 cursor-pointer">
+                    <button onclick="sinkronisasiDariGoogleSheets(true)" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-xs px-4 py-3 rounded-xl shadow-md transition flex items-center gap-2 cursor-pointer flex-1 sm:flex-none justify-center">
                         <i class="fa-solid fa-rotate-right"></i> Refresh Data
                     </button>
                     <!-- Tombol Download Laporan Konsolidasi & Analisis -->
-                    <button onclick="downloadLaporanKonsolidasi()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs px-4 py-3 rounded-xl shadow-md transition flex items-center gap-2 cursor-pointer">
+                    <button onclick="downloadLaporanKonsolidasi()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs px-4 py-3 rounded-xl shadow-md transition flex items-center gap-2 cursor-pointer flex-1 sm:flex-none justify-center">
                         <i class="fa-solid fa-download"></i> Download Laporan & Analisis
                     </button>
-                    <div class="bg-slate-800/60 backdrop-blur-sm px-6 py-3 rounded-2xl border border-slate-700 text-center shadow-inner">
+                    <div class="bg-slate-800/60 backdrop-blur-sm px-6 py-3 rounded-2xl border border-slate-700 text-center shadow-inner w-full sm:w-auto">
                         <p class="text-[10px] text-slate-400 font-bold tracking-wider uppercase">Total Omzet Gabungan</p>
-                        <h4 id="globalTotalNetSales" class="text-xl md:text-2xl font-black text-emerald-400 mt-0.5">Rp 0</h4>
+                        <h4 id="globalTotalNetSales" class="text-xl sm:text-2xl font-black text-emerald-400 mt-0.5">Rp 0</h4>
                     </div>
                 </div>
             </div>
 
             <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse text-sm font-medium text-slate-300">
+                <table class="w-full text-left border-collapse text-xs sm:text-sm font-medium text-slate-300 min-w-[700px]">
                     <thead>
                         <tr class="bg-slate-800/60 text-slate-400 text-xs font-bold uppercase tracking-wider border-b border-slate-700">
-                            <th class="py-4 px-6 w-12 text-center">No</th>
-                            <th class="py-4 px-6">Nama Store</th>
-                            <th class="py-4 px-6 text-center">Hari Input Aktif</th>
-                            <th class="py-4 px-6 text-right">Omzet Menu Baru (Rp)</th>
-                            <th class="py-4 px-6 text-right">Total Net Sales (Rp)</th>
-                            <th class="py-4 px-6 text-center">% Kontribusi</th>
+                            <th class="py-4 px-4 sm:px-6 w-12 text-center">No</th>
+                            <th class="py-4 px-4 sm:px-6">Nama Store</th>
+                            <th class="py-4 px-4 sm:px-6 text-center">Hari Input Aktif</th>
+                            <th class="py-4 px-4 sm:px-6 text-right">Omzet Menu Baru (Rp)</th>
+                            <th class="py-4 px-4 sm:px-6 text-right">Total Net Sales (Rp)</th>
+                            <th class="py-4 px-4 sm:px-6 text-center">% Kontribusi</th>
                         </tr>
                     </thead>
                     <tbody id="globalSummaryTableBody" class="divide-y divide-slate-800/50"></tbody>
-                    <tfoot class="bg-slate-950 font-black text-white border-t-2 border-slate-700 text-base">
+                    <tfoot class="bg-slate-950 font-black text-white border-t-2 border-slate-700 text-sm sm:text-base">
                         <tr>
-                            <td colspan="3" class="py-5 px-6 text-right uppercase tracking-wider">TOTAL KONSOLIDASI (7 STORE):</td>
-                            <td class="py-5 px-6 text-right text-emerald-400" id="globalTotalMenuBaruRp">Rp 0</td>
-                            <td class="py-5 px-6 text-right text-blue-400" id="globalTotalNetSalesRp">Rp 0</td>
-                            <td class="py-5 px-6 text-center text-amber-400" id="globalTotalKontribusi">0.00%</td>
+                            <td colspan="3" class="py-5 px-4 sm:px-6 text-right uppercase tracking-wider">TOTAL KONSOLIDASI (7 STORE):</td>
+                            <td class="py-5 px-4 sm:px-6 text-right text-emerald-400" id="globalTotalMenuBaruRp">Rp 0</td>
+                            <td class="py-5 px-4 sm:px-6 text-right text-blue-400" id="globalTotalNetSalesRp">Rp 0</td>
+                            <td class="py-5 px-4 sm:px-6 text-center text-amber-400" id="globalTotalKontribusi">0.00%</td>
                         </tr>
                     </tfoot>
                 </table>
@@ -327,15 +340,15 @@
         </div>
 
         <!-- DIAGRAM BATANG CAPAIAN PERSENTASE MASING-MASING STORE & ANALISA TARGET 10%-15% -->
-        <div class="bg-white rounded-3xl shadow-xl border border-slate-200 p-8">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6 pb-4 border-b border-slate-100">
+        <div class="bg-white rounded-3xl shadow-xl border border-slate-200 p-6 sm:p-8">
+            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6 pb-4 border-b border-slate-100">
                 <div>
-                    <h3 class="font-extrabold text-2xl text-slate-950 flex items-center gap-3">
+                    <h3 class="font-extrabold text-xl sm:text-2xl text-slate-950 flex items-center gap-3">
                         <i class="fa-solid fa-chart-column text-red-600"></i> Diagram Batang Capaian Persentase per Store (Target 10% - 15%)
                     </h3>
-                    <p class="text-sm text-slate-600 mt-1 font-medium">Visualisasi perbandingan pencapaian kontribusi menu baru terhadap target standar manajemen (10% - 15%).</p>
+                    <p class="text-xs sm:text-sm text-slate-600 mt-1 font-medium">Visualisasi perbandingan pencapaian kontribusi menu baru terhadap target standar manajemen (10% - 15%).</p>
                 </div>
-                <div class="flex items-center gap-3 text-xs font-bold">
+                <div class="flex flex-wrap items-center gap-3 text-xs font-bold">
                     <span class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded bg-amber-500 inline-block"></span> Di Bawah 10%</span>
                     <span class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded bg-emerald-600 inline-block"></span> Target Tercapai (10%-15%)</span>
                     <span class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded bg-blue-600 inline-block"></span> Di Atas 15% (Excellent)</span>
@@ -346,11 +359,11 @@
             <div id="storeBarChartContainer" class="space-y-4 mb-8"></div>
 
             <!-- Analisis Kesimpulan Target 10% - 15% -->
-            <div class="bg-slate-950 text-slate-100 p-8 rounded-3xl border-4 border-amber-400/80 shadow-lg">
-                <h4 class="font-black text-xl uppercase tracking-wider text-amber-400 mb-4 flex items-center gap-3">
+            <div class="bg-slate-950 text-slate-100 p-6 sm:p-8 rounded-3xl border-4 border-amber-400/80 shadow-lg">
+                <h4 class="font-black text-lg sm:text-xl uppercase tracking-wider text-amber-400 mb-4 flex items-center gap-3">
                     <i class="fa-solid fa-square-poll-vertical"></i> Analisis & Kesimpulan Pencapaian Target Area (10% - 15%)
                 </h4>
-                <div id="targetAnalysisConclusion" class="text-sm text-slate-300 leading-relaxed space-y-3 font-medium"></div>
+                <div id="targetAnalysisConclusion" class="text-xs sm:text-sm text-slate-300 leading-relaxed space-y-3 font-medium"></div>
             </div>
         </div>
 
@@ -358,8 +371,8 @@
 
     <!-- FOOTER PROFESSIONAL -->
     <footer class="bg-white border-t border-slate-100 py-6 px-4 mt-auto">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500 font-medium">
-            <div class="flex items-center gap-3">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-500 font-medium text-center sm:text-left">
+            <div class="flex items-center justify-center sm:justify-start gap-3">
                 <img src="logo sa'i.png" alt="Logo" class="h-8 w-auto opacity-70">
                 <span>&copy; 2026-2027 Ayam Geprek Sa'i Area Management. All Rights Reserved.</span>
             </div>
@@ -400,6 +413,8 @@
         // URL Web App Google Apps Script Anda
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwTmPQxIpEisuxKWk6d7seY9TX1OdctPhiaPkh-4jTUY6LjQirkmW5URkx6lmKqaAQy/exec";
 
+        let dailyTrendChartInstance = null;
+
         function initTanggal() {
             const select = document.getElementById('inputTanggal');
             select.innerHTML = '';
@@ -420,21 +435,21 @@
                 if (item.category !== lastCat) {
                     lastCat = item.category;
                     let catRow = document.createElement('tr');
-                    catRow.innerHTML = `<td colspan="8" class="bg-slate-100 font-extrabold text-slate-700 px-6 py-2.5 text-xs uppercase tracking-wider">${lastCat}</td>`;
+                    catRow.innerHTML = `<td colspan="8" class="bg-slate-100 font-extrabold text-slate-700 px-4 sm:px-6 py-2.5 text-xs uppercase tracking-wider">${lastCat}</td>`;
                     tbody.appendChild(catRow);
                 }
 
                 let row = document.createElement('tr');
                 row.className = "hover:bg-slate-50 transition border-b border-slate-100";
                 row.innerHTML = `
-                    <td class="py-3 px-6 text-center text-slate-400 font-semibold">${index + 1}</td>
-                    <td class="py-3 px-6 font-bold text-slate-900">${item.name}</td>
-                    <td class="py-3 px-6 text-right text-slate-500">Rp ${item.price.toLocaleString('id-ID')}</td>
-                    <td class="py-3 px-6 text-center"><input type="number" min="0" value="0" data-index="${index}" data-time="13" class="qty-input w-20 text-center border border-slate-200 rounded-xl py-2 px-2 focus:ring-2 focus:ring-red-600 focus:outline-none bg-slate-50 font-bold"></td>
-                    <td class="py-3 px-6 text-center"><input type="number" min="0" value="0" data-index="${index}" data-time="16" class="qty-input w-20 text-center border border-slate-200 rounded-xl py-2 px-2 focus:ring-2 focus:ring-red-600 focus:outline-none bg-slate-50 font-bold"></td>
-                    <td class="py-3 px-6 text-center"><input type="number" min="0" value="0" data-index="${index}" data-time="20" class="qty-input w-20 text-center border border-slate-200 rounded-xl py-2 px-2 focus:ring-2 focus:ring-red-600 focus:outline-none bg-slate-50 font-bold"></td>
-                    <td class="py-3 px-6 text-center font-extrabold text-slate-950" id="row-pcs-${index}">0</td>
-                    <td class="py-3 px-6 text-right font-extrabold text-emerald-700" id="row-rp-${index}">Rp 0</td>
+                    <td class="py-3 px-4 sm:px-6 text-center text-slate-400 font-semibold">${index + 1}</td>
+                    <td class="py-3 px-4 sm:px-6 font-bold text-slate-900">${item.name}</td>
+                    <td class="py-3 px-4 sm:px-6 text-right text-slate-500">Rp ${item.price.toLocaleString('id-ID')}</td>
+                    <td class="py-3 px-4 sm:px-6 text-center"><input type="number" min="0" value="0" data-index="${index}" data-time="13" class="qty-input w-16 sm:w-20 text-center border border-slate-200 rounded-xl py-2 px-1 focus:ring-2 focus:ring-red-600 focus:outline-none bg-slate-50 font-bold"></td>
+                    <td class="py-3 px-4 sm:px-6 text-center"><input type="number" min="0" value="0" data-index="${index}" data-time="16" class="qty-input w-16 sm:w-20 text-center border border-slate-200 rounded-xl py-2 px-1 focus:ring-2 focus:ring-red-600 focus:outline-none bg-slate-50 font-bold"></td>
+                    <td class="py-3 px-4 sm:px-6 text-center"><input type="number" min="0" value="0" data-index="${index}" data-time="20" class="qty-input w-16 sm:w-20 text-center border border-slate-200 rounded-xl py-2 px-1 focus:ring-2 focus:ring-red-600 focus:outline-none bg-slate-50 font-bold"></td>
+                    <td class="py-3 px-4 sm:px-6 text-center font-extrabold text-slate-950" id="row-pcs-${index}">0</td>
+                    <td class="py-3 px-4 sm:px-6 text-right font-extrabold text-emerald-700" id="row-rp-${index}">Rp 0</td>
                 `;
                 tbody.appendChild(row);
             });
@@ -500,15 +515,15 @@
                 let barWidth = ((data.rp / maxSausRp) * 100).toFixed(1);
 
                 barHtml += `
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">
-                        <div class="flex justify-between items-center mb-2 text-sm font-extrabold text-slate-800">
+                    <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-sm">
+                        <div class="flex justify-between items-center mb-2 text-xs sm:text-sm font-extrabold text-slate-800">
                             <span>${sausage} Sauce (Kumulatif)</span>
                             <span class="text-slate-950">Rp ${data.rp.toLocaleString('id-ID')} (${percentOfMenu}%)</span>
                         </div>
                         <div class="w-full bg-slate-100 rounded-full h-4 overflow-hidden mb-2">
                             <div class="${data.color} h-4 rounded-full transition-all duration-500 shadow-inner" style="width: ${barWidth}%"></div>
                         </div>
-                        <div class="flex justify-between text-xs text-slate-500 font-bold">
+                        <div class="flex justify-between text-[11px] sm:text-xs text-slate-500 font-bold">
                             <span>${data.psc} Porsi Terjual</span>
                             <span>Kontribusi Net Sales: <strong class="text-amber-600">${percentOfNetSales}%</strong></span>
                         </div>
@@ -544,6 +559,7 @@
             document.getElementById('lblStoreAktifText').textContent = store;
             document.getElementById('lblStorePeriodeText').textContent = store;
             document.getElementById('lblBulanGlobal').textContent = bulan;
+            document.getElementById('lblChartStore').textContent = store;
             muatDataStoreAktif();
             renderGlobalSummary();
         }
@@ -694,6 +710,7 @@
                 tbody.innerHTML = `<tr><td colspan="6" class="text-center py-10 text-slate-400 font-medium">Belum ada data tersimpan untuk ${store} pada ${bulan}.</td></tr>`;
                 renderShiftAnalysis(savedRecords);
                 renderPeriodeAnalysis(savedRecords);
+                renderDailyTrendChart(savedRecords);
                 return;
             }
 
@@ -702,12 +719,12 @@
                 let tr = document.createElement('tr');
                 tr.className = "hover:bg-slate-50 transition border-b border-slate-100";
                 tr.innerHTML = `
-                    <td class="py-4 px-6 font-bold text-slate-900">${rec.tanggal}</td>
-                    <td class="py-4 px-6 text-slate-600 font-semibold">${rec.kasir}</td>
-                    <td class="py-4 px-6 text-right font-black text-emerald-700">Rp ${rec.totalRp.toLocaleString('id-ID')}</td>
-                    <td class="py-4 px-6 text-right font-black text-blue-700">Rp ${rec.netSalesTotal.toLocaleString('id-ID')}</td>
-                    <td class="py-4 px-6 text-center font-black text-amber-600">${rec.kontribusi}%</td>
-                    <td class="py-4 px-6 text-center">
+                    <td class="py-4 px-4 sm:px-6 font-bold text-slate-900">${rec.tanggal}</td>
+                    <td class="py-4 px-4 sm:px-6 text-slate-600 font-semibold">${rec.kasir}</td>
+                    <td class="py-4 px-4 sm:px-6 text-right font-black text-emerald-700">Rp ${rec.totalRp.toLocaleString('id-ID')}</td>
+                    <td class="py-4 px-4 sm:px-6 text-right font-black text-blue-700">Rp ${rec.netSalesTotal.toLocaleString('id-ID')}</td>
+                    <td class="py-4 px-4 sm:px-6 text-center font-black text-amber-600">${rec.kontribusi}%</td>
+                    <td class="py-4 px-4 sm:px-6 text-center">
                         <button onclick="hapusRecord(${rec.id}, '${store}', '${bulan}')" class="bg-red-50 text-red-600 hover:bg-red-100 p-2.5 rounded-xl transition shadow-sm" title="Hapus Data">
                             <i class="fa-solid fa-trash"></i>
                         </button>
@@ -718,6 +735,80 @@
 
             renderShiftAnalysis(savedRecords);
             renderPeriodeAnalysis(savedRecords);
+            renderDailyTrendChart(savedRecords);
+        }
+
+        function renderDailyTrendChart(records) {
+            let ctx = document.getElementById('dailyTrendChart').getContext('2d');
+            
+            let labels = [];
+            let dataOmzet = [];
+
+            // Urutkan berdasarkan tanggal
+            records.sort((a, b) => a.tanggalNum - b.tanggalNum);
+
+            records.forEach(r => {
+                labels.push(`Tgl ${r.tanggalNum}`);
+                dataOmzet.push(r.totalRp);
+            });
+
+            if (dailyTrendChartInstance) {
+                dailyTrendChartInstance.destroy();
+            }
+
+            dailyTrendChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Omzet Menu Baru (Rp)',
+                        data: dataOmzet,
+                        borderColor: '#059669',
+                        backgroundColor: 'rgba(5, 150, 105, 0.1)',
+                        borderWidth: 3,
+                        pointBackgroundColor: '#dc2626',
+                        pointBorderColor: '#ffffff',
+                        pointRadius: 5,
+                        pointHoverRadius: 7,
+                        fill: true,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let val = context.raw || 0;
+                                    return ' Omzet: Rp ' + val.toLocaleString('id-ID');
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    if (value >= 1000000) {
+                                        return (value / 1000000).toFixed(1) + ' Jt';
+                                    } else if (value >= 1000) {
+                                        return (value / 1000).toFixed(0) + ' Rb';
+                                    }
+                                    return value;
+                                }
+                            },
+                            grid: { color: 'rgba(226, 232, 240, 0.6)' }
+                        },
+                        x: {
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
         }
 
         function renderShiftAnalysis(records) {
@@ -734,19 +825,19 @@
             let p20 = totalShiftRp > 0 ? ((sum20 / totalShiftRp) * 100).toFixed(1) : 0;
 
             document.getElementById('shiftCardContainer').innerHTML = `
-                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
+                <div class="bg-slate-50 p-5 sm:p-6 rounded-2xl border border-slate-200">
                     <p class="text-xs font-bold text-slate-400 uppercase">Jam 13.00 (Shift Siang)</p>
-                    <h4 class="text-2xl font-extrabold text-slate-900 mt-1">Rp ${sum13.toLocaleString('id-ID')}</h4>
+                    <h4 class="text-xl sm:text-2xl font-extrabold text-slate-900 mt-1">Rp ${sum13.toLocaleString('id-ID')}</h4>
                     <p class="text-xs font-bold text-blue-600 mt-2">Keramaian: ${p13}%</p>
                 </div>
-                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
+                <div class="bg-slate-50 p-5 sm:p-6 rounded-2xl border border-slate-200">
                     <p class="text-xs font-bold text-slate-400 uppercase">Jam 16.00 (Shift Sore)</p>
-                    <h4 class="text-2xl font-extrabold text-slate-900 mt-1">Rp ${sum16.toLocaleString('id-ID')}</h4>
+                    <h4 class="text-xl sm:text-2xl font-extrabold text-slate-900 mt-1">Rp ${sum16.toLocaleString('id-ID')}</h4>
                     <p class="text-xs font-bold text-blue-600 mt-2">Keramaian: ${p16}%</p>
                 </div>
-                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
+                <div class="bg-slate-50 p-5 sm:p-6 rounded-2xl border border-slate-200">
                     <p class="text-xs font-bold text-slate-400 uppercase">Jam 20.00 (Shift Malam)</p>
-                    <h4 class="text-2xl font-extrabold text-slate-900 mt-1">Rp ${sum20.toLocaleString('id-ID')}</h4>
+                    <h4 class="text-xl sm:text-2xl font-extrabold text-slate-900 mt-1">Rp ${sum20.toLocaleString('id-ID')}</h4>
                     <p class="text-xs font-bold text-blue-600 mt-2">Keramaian: ${p20}%</p>
                 </div>
             `;
@@ -761,7 +852,7 @@
 
             document.getElementById('shiftAnalysisSummary').innerHTML = totalShiftRp === 0 ? 
                 "Belum ada data transaksi jam operasional yang masuk." :
-                `Berdasarkan data kumulatif store ini, jam keramaian (peak hours) tertinggi terjadi pada <strong>${peakTime}</strong>. Gunakan acuan ini untuk penjadwalan kesiapan stok bahan baku saus dan penambahan tenaga kerja shift terkait.`;
+                `Berdasarkan data kumulatif store ini, jam keramaian (peak hours) tertinggi secara otomatis tercatat pada <strong>${peakTime}</strong>. Gunakan acuan ini untuk penjadwalan kesiapan stok bahan baku saus dan penambahan tenaga kerja shift terkait.`;
         }
 
         function renderPeriodeAnalysis(records) {
@@ -799,10 +890,10 @@
                 let p20 = totalJamP > 0 ? ((p.jam[20] / totalJamP) * 100).toFixed(0) : 0;
 
                 periodeHtml += `
-                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 flex flex-col justify-between">
+                    <div class="bg-slate-50 p-5 sm:p-6 rounded-2xl border border-slate-200 flex flex-col justify-between">
                         <div>
                             <span class="text-[10px] font-extrabold uppercase bg-amber-100 text-amber-800 px-2.5 py-1 rounded-full">${p.title}</span>
-                            <h4 class="text-xl font-extrabold text-slate-900 mt-3">Rp ${p.omzet.toLocaleString('id-ID')}</h4>
+                            <h4 class="text-lg sm:text-xl font-extrabold text-slate-900 mt-3">Rp ${p.omzet.toLocaleString('id-ID')}</h4>
                             <p class="text-xs text-blue-700 font-bold mt-0.5">Net Sales Store: Rp ${p.netSales.toLocaleString('id-ID')}</p>
                             
                             <div class="mt-3 text-xs text-slate-500 font-semibold space-y-1 border-t border-slate-200 pt-3">
@@ -887,12 +978,12 @@
                 let tr = document.createElement('tr');
                 tr.className = "hover:bg-slate-800/80 transition border-b border-slate-800/60";
                 tr.innerHTML = `
-                    <td class="py-4 px-6 font-bold text-slate-400 text-center">${idx + 1}</td>
-                    <td class="py-4 px-6 font-extrabold text-white">${stName}</td>
-                    <td class="py-4 px-6 text-center text-slate-300 font-bold">${storeRecords.length} Hari</td>
-                    <td class="py-4 px-6 text-right font-black text-emerald-400">Rp ${stTotalMenuBaru.toLocaleString('id-ID')}</td>
-                    <td class="py-4 px-6 text-right font-black text-blue-400">Rp ${stTotalNetSales.toLocaleString('id-ID')}</td>
-                    <td class="py-4 px-6 text-center font-black text-amber-400">${stKontribusi}%</td>
+                    <td class="py-4 px-4 sm:px-6 font-bold text-slate-400 text-center">${idx + 1}</td>
+                    <td class="py-4 px-4 sm:px-6 font-extrabold text-white">${stName}</td>
+                    <td class="py-4 px-4 sm:px-6 text-center text-slate-300 font-bold">${storeRecords.length} Hari</td>
+                    <td class="py-4 px-4 sm:px-6 text-right font-black text-emerald-400">Rp ${stTotalMenuBaru.toLocaleString('id-ID')}</td>
+                    <td class="py-4 px-4 sm:px-6 text-right font-black text-blue-400">Rp ${stTotalNetSales.toLocaleString('id-ID')}</td>
+                    <td class="py-4 px-4 sm:px-6 text-center font-black text-amber-400">${stKontribusi}%</td>
                 `;
                 globalTbody.appendChild(tr);
             });
@@ -938,7 +1029,7 @@
 
                 chartHtml += `
                     <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
-                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-2 mb-2">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-2">
                             <span class="font-extrabold text-slate-900 text-sm">${st.name}</span>
                             <div class="flex items-center gap-3">
                                 <span class="text-xs px-2.5 py-0.5 rounded-full font-bold ${badgeClass}">${badgeText}</span>
@@ -951,7 +1042,7 @@
                             
                             <div class="${barColor} h-4 rounded-full transition-all duration-500" style="width: ${widthPercent}%"></div>
                         </div>
-                        <div class="flex justify-between items-center mt-1 text-[11px] text-slate-500 font-semibold">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mt-1 text-[11px] text-slate-500 font-semibold gap-1">
                             <span>Omzet Menu Baru: Rp ${st.omzetBaru.toLocaleString('id-ID')}</span>
                             <span class="text-red-600 font-bold">Target Range: 10% - 15%</span>
                         </div>
@@ -969,7 +1060,6 @@
             document.getElementById('targetAnalysisConclusion').innerHTML = analysisHtml;
         }
 
-        // FUNGSI EKSPOR / DOWNLOAD LAPORAN KONSOLIDASI & ANALISIS
         function downloadLaporanKonsolidasi() {
             let data = globalExportDataCache;
             let bulanName = data.bulan || "Periode";
@@ -1003,7 +1093,7 @@
             textReport += `Dicetak otomatis oleh Sistem Area Management Ayam Geprek Sa'i\n`;
             textReport += `========================================================================\n`;
 
-            let blob = new Blob([textReport], { type: 'text/plain;charset=utf-8' });
+            let blob = new Blob([textReport], { type: 'text/plain;charset=utf-8' };
             let url = URL.createObjectURL(blob);
             let a = document.createElement('a');
             a.href = url;
