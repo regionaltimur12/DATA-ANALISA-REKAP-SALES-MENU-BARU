@@ -147,7 +147,7 @@
                 </div>
             </div>
 
-            <!-- TABEL INPUT MENU BARU RESPONSIF -->
+            <!-- TABEL INPUT MENU BARU -->
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse min-w-[750px]">
                     <thead class="bg-slate-100 text-slate-600 text-xs font-bold uppercase tracking-wider border-b border-slate-200">
@@ -184,7 +184,7 @@
             </div>
         </div>
 
-        <!-- ANALISIS KOMULATIF 3 JENIS SAUS -->
+        <!-- ANALISIS KUMULATIF 3 JENIS SAUS -->
         <div class="bg-white rounded-3xl shadow-sm border border-slate-100 p-6 sm:p-8 mb-10">
             <h3 class="font-extrabold text-xl sm:text-2xl text-slate-950 flex items-center gap-3 mb-3">
                 <i class="fa-solid fa-chart-pie text-red-600"></i> Analisis Performa Kumulatif 3 Jenis Saus Utama
@@ -229,7 +229,7 @@
             </div>
         </div>
 
-        <!-- ANALISIS SHIFT JAM SIBUK (OTOMATIS REKAPITULASI SHIF HARIAN) -->
+        <!-- ANALISIS SHIFT JAM SIBUK -->
         <div class="bg-white rounded-3xl shadow-sm border border-slate-100 p-6 sm:p-8 mb-10">
             <h3 class="font-extrabold text-xl sm:text-2xl text-slate-950 flex items-center gap-3 mb-2">
                 <i class="fa-solid fa-clock text-blue-600"></i> Rekapitulasi Otomatis Performa Shift Harian (Peak Hours)
@@ -244,7 +244,7 @@
             </div>
         </div>
 
-        <!-- ANALISIS KUMULATIF PER PERIODE BULANAN (1 s.d. 4) -->
+        <!-- ANALISIS KUMULATIF PER PERIODE BULANAN -->
         <div class="bg-white rounded-3xl shadow-sm border border-slate-100 p-6 sm:p-8 mb-10">
             <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6 pb-4 border-b border-slate-100">
                 <div>
@@ -299,11 +299,9 @@
                     <p class="text-xs sm:text-sm text-slate-400 mt-1.5 font-medium">Akumulasi performa dari seluruh store area untuk bulan <span id="lblBulanGlobal" class="text-amber-400 font-bold">November 2026</span></p>
                 </div>
                 <div class="flex flex-wrap items-center gap-3 w-full xl:w-auto">
-                    <!-- Tombol Refresh Konsolidasi -->
                     <button onclick="sinkronisasiDariGoogleSheets(true)" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-xs px-4 py-3 rounded-xl shadow-md transition flex items-center gap-2 cursor-pointer flex-1 sm:flex-none justify-center">
                         <i class="fa-solid fa-rotate-right"></i> Refresh Data
                     </button>
-                    <!-- Tombol Download Laporan Konsolidasi & Analisis -->
                     <button onclick="downloadLaporanKonsolidasi()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs px-4 py-3 rounded-xl shadow-md transition flex items-center gap-2 cursor-pointer flex-1 sm:flex-none justify-center">
                         <i class="fa-solid fa-download"></i> Download Laporan & Analisis
                     </button>
@@ -339,7 +337,7 @@
             </div>
         </div>
 
-        <!-- DIAGRAM BATANG CAPAIAN PERSENTASE MASING-MASING STORE & ANALISA TARGET 10%-15% -->
+        <!-- DIAGRAM BATANG CAPAIAN PERSENTASE MASING-MASING STORE -->
         <div class="bg-white rounded-3xl shadow-xl border border-slate-200 p-6 sm:p-8">
             <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6 pb-4 border-b border-slate-100">
                 <div>
@@ -355,10 +353,8 @@
                 </div>
             </div>
 
-            <!-- Container Diagram Batang per Store -->
             <div id="storeBarChartContainer" class="space-y-4 mb-8"></div>
 
-            <!-- Analisis Kesimpulan Target 10% - 15% -->
             <div class="bg-slate-950 text-slate-100 p-6 sm:p-8 rounded-3xl border-4 border-amber-400/80 shadow-lg">
                 <h4 class="font-black text-lg sm:text-xl uppercase tracking-wider text-amber-400 mb-4 flex items-center gap-3">
                     <i class="fa-solid fa-square-poll-vertical"></i> Analisis & Kesimpulan Pencapaian Target Area (10% - 15%)
@@ -410,8 +406,8 @@
             { category: "4. PAKET MENU BARU", name: "PAKET 3 - GARLIC SAUCE", price: 24000, sausType: "Garlic" }
         ];
 
-        // URL Web App Google Apps Script Anda
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwTmPQxIpEisuxKWk6d7seY9TX1OdctPhiaPkh-4jTUY6LjQirkmW5URkx6lmKqaAQy/exec";
+        // URL Web App Google Apps Script terbaru
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwUq5jt_ZAILhF0Mn7kmixC19oJlgDusMMJpuvbHh4-unyMqQWfXtMUkEpj0d0TAfZn/exec";
 
         let dailyTrendChartInstance = null;
 
@@ -744,7 +740,6 @@
             let labels = [];
             let dataOmzet = [];
 
-            // Urutkan berdasarkan tanggal
             records.sort((a, b) => a.tanggalNum - b.tanggalNum);
 
             records.forEach(r => {
@@ -1093,7 +1088,7 @@
             textReport += `Dicetak otomatis oleh Sistem Area Management Ayam Geprek Sa'i\n`;
             textReport += `========================================================================\n`;
 
-            let blob = new Blob([textReport], { type: 'text/plain;charset=utf-8' };
+            let blob = new Blob([textReport], { type: 'text/plain;charset=utf-8' });
             let url = URL.createObjectURL(blob);
             let a = document.createElement('a');
             a.href = url;
